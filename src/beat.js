@@ -6,6 +6,7 @@ import kick from './sounds/kick.mp3';
 import hihat from './sounds/hihat.mp3';
 import useInterval from './use_interval';
 import Button from 'react-bootstrap/Button';
+import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 
 function Beat() {
 
@@ -34,6 +35,70 @@ function Beat() {
     const snareHat = new Pizzicato.Group([snare3, hat2])
     const kickHat = new Pizzicato.Group([kick3, hat3])
     const snareKickHat = new Pizzicato.Group([snare4, kick4, hat4])
+
+
+    // can clone sound objects with sound.clone();
+
+    var flanger = new Pizzicato.Effects.Flanger({
+        time: 0.45,
+        speed: 0.2,
+        depth: 0.2,
+        feedback: 0.1,
+        mix: 0.3
+    });
+
+    var dubDelay = new Pizzicato.Effects.DubDelay({
+        feedback: 0.3,
+        time: 0.7,
+        mix: 0.3,
+        cutoff: 700
+    });
+   
+
+    // semitone multiples by 1.05946 in equal tempered scale
+    var a = new Pizzicato.Sound({ 
+        source: 'wave',
+        options: { type: 'sine', frequency: (440/4), release: .1, volume: .1}
+    });
+    a.addEffect(flanger)
+
+    var b = new Pizzicato.Sound({
+        source: 'wave',
+        options: { type: 'sine', frequency: (493.88/4), release: .1, volume: .1}
+    });
+   b.addEffect(flanger)
+    var c_sharp = new Pizzicato.Sound({ 
+        source: 'wave',
+        options: { type: 'sine', frequency: (554.37/4), release: .1, volume: .1}
+    });
+    c_sharp.addEffect(flanger)
+    var d = new Pizzicato.Sound({ 
+        source: 'wave',
+        options: { type: 'sine', frequency: (587.33/4), release: .1, volume: .1}
+    });
+    d.addEffect(flanger)
+    var e = new Pizzicato.Sound({ 
+        source: 'wave',
+        options: { type: 'sine', frequency: (659.25/4), release: .1, volume: .1}
+    });
+    e.addEffect(flanger)
+    
+
+
+    useHotkeys('a', () => a.play(), {keydown:true});
+    useHotkeys('a', () => a.stop(), {keyup:true});
+
+    useHotkeys('s', () => b.play(), {keydown:true});
+    useHotkeys('s', () => b.stop(), {keyup:true});
+
+    useHotkeys('d', () => c_sharp.play(), {keydown:true});
+    useHotkeys('d', () => c_sharp.stop(), {keyup:true});
+
+    useHotkeys('f', () => d.play(), {keydown:true});
+    useHotkeys('f', () => d.stop(), {keyup:true});
+
+    useHotkeys('g', () => e.play(), {keydown:true});
+    useHotkeys('g', () => e.stop(), {keyup:true});
 
    
     useEffect(() => {
@@ -154,6 +219,7 @@ function Beat() {
         setCount(0)
     }
 
+
     function clear() {
         setSnareSteps([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
         setKickSteps([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
@@ -179,6 +245,9 @@ function Beat() {
 
     
 
+
+    
+
   return (
       <div>
       <div>
@@ -186,6 +255,7 @@ function Beat() {
         <button onClick={stop}>stop</button>
         <button onClick={clear}>clear</button>
         <button onClick={toggleReverb}>reverb</button>
+       
       </div>
       <div id = "snare">
         <p style={{display:'block'}}>snare</p>
