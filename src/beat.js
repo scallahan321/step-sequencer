@@ -22,7 +22,7 @@ function Beat() {
     const hat2 = new Pizzicato.Sound(hihat)
     const hat3 = new Pizzicato.Sound(hihat)
     const hat4 = new Pizzicato.Sound(hihat)
-    const [delay, setDelay] = useState(250)
+    const [delay, setDelay] = useState(260)
     const [isRunning, setIsRunning] = useState(false);
     const [count, setCount] = useState(0)
     const [snareSteps, setSnareSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
@@ -47,58 +47,96 @@ function Beat() {
         mix: 0.3
     });
 
+    var quadrafuzz = new Pizzicato.Effects.Quadrafuzz({
+        lowGain: 1,
+        midLowGain: 1,
+        midHighGain: 0.3,
+        highGain: 0.3,
+    });
+
     var dubDelay = new Pizzicato.Effects.DubDelay({
         feedback: 0.3,
         time: 0.7,
         mix: 0.3,
         cutoff: 700
     });
-   
+
+    var distortion = new Pizzicato.Effects.Distortion({
+        gain: 0.2
+    });
+
+//     const [freq, setFreq] = useState(622.25)
+    
+//    const testOptions = { type: 'triangle', frequency: freq, release: 0.2, attack: 0.08, volume: .1}
 
     // semitone multiples by 1.05946 in equal tempered scale
+    var g = new Pizzicato.Sound({ 
+        source: 'wave',
+        options: { type: 'sine', frequency: (392.00/4), release: 0.2, attack: 0.08, volume: .1}
+        // options: testOptions
+    });
+    g.addEffect(distortion)
+
     var a = new Pizzicato.Sound({ 
         source: 'wave',
-        options: { type: 'sine', frequency: (440/4), release: .1, volume: .1}
+        options: { type: 'sine', frequency: (440/4), release: 0.2, attack: 0.08, volume: .1}
     });
-    a.addEffect(flanger)
+    a.addEffect(distortion)
 
     var b = new Pizzicato.Sound({
         source: 'wave',
-        options: { type: 'sine', frequency: (493.88/4), release: .1, volume: .1}
+        options: { type: 'sine', frequency: (493.88/4), release: 0.2, attack: 0.08, volume: .1}
     });
-   b.addEffect(flanger)
-    var c_sharp = new Pizzicato.Sound({ 
+   b.addEffect(distortion)
+    var c = new Pizzicato.Sound({ 
         source: 'wave',
-        options: { type: 'sine', frequency: (554.37/4), release: .1, volume: .1}
+        options: { type: 'sine', frequency: (523.25/4), release: 0.2, attack: 0.08, volume: .1}
     });
-    c_sharp.addEffect(flanger)
+    c.addEffect(distortion)
     var d = new Pizzicato.Sound({ 
         source: 'wave',
-        options: { type: 'sine', frequency: (587.33/4), release: .1, volume: .1}
+        options: { type: 'sine', frequency: (587.33/4), release: 0.2, attack: 0.08, volume: .1}
     });
-    d.addEffect(flanger)
+    d.addEffect(distortion)
     var e = new Pizzicato.Sound({ 
         source: 'wave',
-        options: { type: 'sine', frequency: (659.25/4), release: .1, volume: .1}
+        options: { type: 'sine', frequency: (82.41), release: 0.2, attack: 0.08, volume: .1}
     });
-    e.addEffect(flanger)
+    e.addEffect(distortion)
+    var f = new Pizzicato.Sound({ 
+        source: 'wave',
+        options: { type: 'sine', frequency: (87.31), release: 0.2, attack: 0.08, volume: .1}
+    });
+    f.addEffect(distortion)
     
 
 
     useHotkeys('a', () => a.play(), {keydown:true});
     useHotkeys('a', () => a.stop(), {keyup:true});
 
-    useHotkeys('s', () => b.play(), {keydown:true});
+    useHotkeys('s', () => {
+        b.play();
+        a.stop();
+        c.stop();
+        d.stop();
+        e.stop();
+    }, {keydown:true});
     useHotkeys('s', () => b.stop(), {keyup:true});
 
-    useHotkeys('d', () => c_sharp.play(), {keydown:true});
-    useHotkeys('d', () => c_sharp.stop(), {keyup:true});
+    useHotkeys('d', () => c.play(), {keydown:true});
+    useHotkeys('d', () => c.stop(), {keyup:true});
 
     useHotkeys('f', () => d.play(), {keydown:true});
     useHotkeys('f', () => d.stop(), {keyup:true});
 
-    useHotkeys('g', () => e.play(), {keydown:true});
-    useHotkeys('g', () => e.stop(), {keyup:true});
+    useHotkeys('z', () => e.play(), {keydown:true});
+    useHotkeys('z', () => e.stop(), {keyup:true});
+
+    useHotkeys('c', () => g.play(), {keydown:true});
+    useHotkeys('c', () => g.stop(), {keyup:true});
+
+    useHotkeys('x', () => f.play(), {keydown:true});
+    useHotkeys('x', () => f.stop(), {keyup:true});
 
    
     useEffect(() => {
@@ -121,10 +159,6 @@ function Beat() {
         [[true, true, true].toString(), snareKickHat]
       ]);
    
-    function setButtonClass(step) {
-        var className = step ? 'step-button-highlight' : 'step-button-plain';
-        return className
-    }
 
     function setButtonVariant(step) {
         var variant = step ? 'primary' : 'outline-primary';

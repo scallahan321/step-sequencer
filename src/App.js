@@ -1,6 +1,7 @@
 import './App.css';
 import Piz from './pizzicato';
 import Beat from './beat';
+import BassSynth from './synth';
 
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
 
   return (
     
-    <Beat />
+    <BassSynth />
   );
 
 
