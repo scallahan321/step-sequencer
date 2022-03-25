@@ -4,6 +4,7 @@ import Pizzicato from 'pizzicato';
 import snare from './sounds/snare.mp3';
 import kick from './sounds/kick.mp3';
 import hihat from './sounds/hihat.mp3';
+import BassSynth from './bass_synth';
 import useInterval from './use_interval';
 import Button from 'react-bootstrap/Button';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
@@ -64,79 +65,6 @@ function Beat() {
     var distortion = new Pizzicato.Effects.Distortion({
         gain: 0.2
     });
-
-//     const [freq, setFreq] = useState(622.25)
-    
-//    const testOptions = { type: 'triangle', frequency: freq, release: 0.2, attack: 0.08, volume: .1}
-
-    // semitone multiples by 1.05946 in equal tempered scale
-    var g = new Pizzicato.Sound({ 
-        source: 'wave',
-        options: { type: 'sine', frequency: (392.00/4), release: 0.2, attack: 0.08, volume: .1}
-        // options: testOptions
-    });
-    g.addEffect(distortion)
-
-    var a = new Pizzicato.Sound({ 
-        source: 'wave',
-        options: { type: 'sine', frequency: (440/4), release: 0.2, attack: 0.08, volume: .1}
-    });
-    a.addEffect(distortion)
-
-    var b = new Pizzicato.Sound({
-        source: 'wave',
-        options: { type: 'sine', frequency: (493.88/4), release: 0.2, attack: 0.08, volume: .1}
-    });
-   b.addEffect(distortion)
-    var c = new Pizzicato.Sound({ 
-        source: 'wave',
-        options: { type: 'sine', frequency: (523.25/4), release: 0.2, attack: 0.08, volume: .1}
-    });
-    c.addEffect(distortion)
-    var d = new Pizzicato.Sound({ 
-        source: 'wave',
-        options: { type: 'sine', frequency: (587.33/4), release: 0.2, attack: 0.08, volume: .1}
-    });
-    d.addEffect(distortion)
-    var e = new Pizzicato.Sound({ 
-        source: 'wave',
-        options: { type: 'sine', frequency: (82.41), release: 0.2, attack: 0.08, volume: .1}
-    });
-    e.addEffect(distortion)
-    var f = new Pizzicato.Sound({ 
-        source: 'wave',
-        options: { type: 'sine', frequency: (87.31), release: 0.2, attack: 0.08, volume: .1}
-    });
-    f.addEffect(distortion)
-    
-
-
-    useHotkeys('a', () => a.play(), {keydown:true});
-    useHotkeys('a', () => a.stop(), {keyup:true});
-
-    useHotkeys('s', () => {
-        b.play();
-        a.stop();
-        c.stop();
-        d.stop();
-        e.stop();
-    }, {keydown:true});
-    useHotkeys('s', () => b.stop(), {keyup:true});
-
-    useHotkeys('d', () => c.play(), {keydown:true});
-    useHotkeys('d', () => c.stop(), {keyup:true});
-
-    useHotkeys('f', () => d.play(), {keydown:true});
-    useHotkeys('f', () => d.stop(), {keyup:true});
-
-    useHotkeys('z', () => e.play(), {keydown:true});
-    useHotkeys('z', () => e.stop(), {keyup:true});
-
-    useHotkeys('c', () => g.play(), {keydown:true});
-    useHotkeys('c', () => g.stop(), {keyup:true});
-
-    useHotkeys('x', () => f.play(), {keydown:true});
-    useHotkeys('x', () => f.stop(), {keyup:true});
 
    
     useEffect(() => {
@@ -348,6 +276,7 @@ function Beat() {
         <Button variant={setButtonVariant(hatSteps[14])} value='14' onClick={ e => handleHatClick(e)}> 15 </Button>
         <Button variant={setButtonVariant(hatSteps[15])} value='15' onClick={ e => handleHatClick(e)}> 16 </Button>
       </div>
+      <BassSynth />
       </div>
   );
 }

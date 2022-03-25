@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -25,3 +27,34 @@
 .step-button-plain {
   background-color: white;
 }
+
+.keyboard-key {
+  display: inline-block;
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid black;
+  background-color: white;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.keyboard-key-pressed {
+  display: inline-block;
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid black;
+  background-color: var(--primary);
+  color: white;
+  font-size: 1.5rem;
+}
+
+.bottom-row-keys {
+  margin-left: 1.5rem;
+}
+
+.key-label {
+  display: block;
+  margin-top: .5rem;
+  padding-left: 1rem;
+}
+

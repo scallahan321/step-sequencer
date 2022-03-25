@@ -1,17 +1,14 @@
 import './App.css';
-import Piz from './pizzicato';
 import Beat from './beat';
-import BassSynth from './synth';
+import BassSynth from './bass_synth';
 
 
 function App() {
 
 
   return (
-    
-    <BassSynth />
-  );
-
+    <Beat />
+  )
 
 }
 
