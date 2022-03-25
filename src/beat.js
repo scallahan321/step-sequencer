@@ -7,10 +7,12 @@ import hihat from './sounds/hihat.mp3';
 import BassSynth from './bass_synth';
 import useInterval from './use_interval';
 import Button from 'react-bootstrap/Button';
-import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
+import LeadSynth from './lead_synth';
 
 function Beat() {
 
+
+    // on a new branch, try loading each sound ones and cloning them
     const snare1 = new Pizzicato.Sound(snare)
     const snare2 = new Pizzicato.Sound(snare)
     const snare3 = new Pizzicato.Sound(snare)

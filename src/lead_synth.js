@@ -2,21 +2,27 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Pizzicato from 'pizzicato';
 import Button from 'react-bootstrap/Button';
+import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
+import LeadKeyboard from './lead_keyboard';
 import Form from 'react-bootstrap/Form'
-import BassKeyboard from './bass_keyboard';
 
 
-function BassSynth() {
+
+function LeadSynth() {
 
     //roughly 1.059
     const semitone_up = 261.63/246.94
     //roughly .943
     const semitone_down = 246.94/261.63
     //261 is middle c
-    const c_freq = [65.41, 73.42, 82.41, 87.31, 98.00, 110.00, 123.47, 130.81, 146.83, 164.81]
+    const c_freq = [261.64, 293.68, 329.64, 349.24, 392, 440, 493.88, 523.24, 587.32, 659.24, 698.44, 784, 880, 987.76, 1046.52]
     const [tones, setTones] = useState([])
     const [frequencies, setFrequencies] = useState([])
-    const [flangerOn, setFlangerOn] = useState(false)
+    const [delayOn, setDelayOn] = useState(false)
+    const [reverbOn, setReverbOn] = useState(false)
+
+  
+
 
     const multipliers = {
         "c": 1,
@@ -61,50 +67,70 @@ function BassSynth() {
         ratio: 10
     });
 
+    var delay = new Pizzicato.Effects.Delay({
+        feedback: 0.2,
+        time: 0.520,
+        mix: 0.1
+    });
 
-    var distortion = new Pizzicato.Effects.Distortion()
+    var reverb = new Pizzicato.Effects.Reverb({
+        time: .4,
+        decay: .3,
+        reverse: false,
+        mix: 0.2
+    });
 
-    function toggleFlanger() {
-        var isOn = flangerOn
-        if (!flangerOn) {
-            const notes = createWaves(frequencies, true)
+    function toggleDelay() {
+        var isOn = delayOn
+        if (!delayOn) {
+            const notes = createWaves(frequencies, true, reverbOn)
             setTones(notes)
             isOn = true
         }
         else {
-            const notes = createWaves(frequencies, false)
+            const notes = createWaves(frequencies, false, reverbOn)
             setTones(notes)
             isOn = false
         }
-        setFlangerOn(isOn)
+        setDelayOn(isOn)
+    }
+
+    function toggleReverb() {
+        var isOn = reverbOn
+        if (!reverbOn) {
+            const notes = createWaves(frequencies, delayOn, true)
+            setTones(notes)
+            isOn = true
+        }
+        else {
+            const notes = createWaves(frequencies, delayOn, false)
+            setTones(notes)
+            isOn = false
+        }
+        setReverbOn(isOn)
     }
 
 
-    function createWaves(scale, flangerBool) {
+    
+
+    function createWaves(scale, delayBool, reverbBool) {
         var tones = []  
-        // flange is boosting volume, need to make initial volume lower if turned on
-        if (flangerBool) {
-            for (const element of scale) {
-                tones.push(new Pizzicato.Sound({ 
-                    source: 'wave',
-                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .05}
-                }))
-            }
-            for (const tone of tones) {
-                tone.addEffect(distortion) 
-                
-            }
+        for (const element of scale) {
+            tones.push(new Pizzicato.Sound({ 
+                source: 'wave',
+                options: { type: 'sawtooth', frequency: element , release: 0.2, attack: 0.7, volume: .001}
+            }))
         }
-        else {
-            for (const element of scale) {
-                tones.push(new Pizzicato.Sound({ 
-                    source: 'wave',
-                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .4}
-                }))
+        for (const tone of tones) {
+            tone.addEffect(lowPassFilter)
+            if (delayBool) {
+                tone.addEffect(delay)
             }
-            for (const tone of tones) {
-                
+            if (reverbBool) {
+                tone.addEffect(reverb)
             }
+            tone.addEffect(compressor)
+            
         }
         return tones
     }
@@ -113,20 +139,24 @@ function BassSynth() {
         const key = e.target.value
         const frequencies = c_freq.map((element) => element * multipliers[key])
         setFrequencies(frequencies)
-        const notes = createWaves(frequencies, flangerOn)
+        const notes = createWaves(frequencies, delayOn, reverbOn)
         setTones(notes)
     }
+
   
     return (
         <div>
-
-            <Form.Select onChange={e => {setScaleFreq(e)}}  style={{height:'3rem'}} >
+            <div className="lead-controls">
+                <Form.Select onChange={e => {setScaleFreq(e)}}  style={{height:'3rem', display:'inline-block'}}>
                     <option value="" hidden> Change Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
-               </Form.Select>
-            <BassKeyboard tones={tones} toggleFlanger={toggleFlanger} />
+               </Form.Select>               
+            </div>
+            
+            
+            <LeadKeyboard tones={tones} toggleDelay={toggleDelay} toggleReverb={toggleReverb}/>
         </div>
     )
  
 }
-export default BassSynth
+export default LeadSynth
