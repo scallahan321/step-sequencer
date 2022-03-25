@@ -3,14 +3,10 @@ import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 
 function Keyboard(props) {
 
-    //const [keyClass, setKeyClass] = useState({keyboard-key})
-    // const [pressed, setPressed] = useState([
-    //     false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-    // ])
 
     const [pressed, setPressed] = useState(false)
 
-    const [lastPlayed, setLastPlayed] = useState(0)
+    const [lastPlayed, setLastPlayed] = useState(null)
 
 
     function keyClass(key) {
@@ -22,42 +18,23 @@ function Keyboard(props) {
         }
     }
 
-    // function keyClass(key) {
-    //     if (pressed[key]) {
-    //         return "keyboard-key-pressed"
-    //     }
-    //     else {
-    //         return "keyboard-key"
-    //     }
-    // }
-
-    // function keyClass(key) {
-    //     if (pressed[key]) {
-    //         return "keyboard-key-pressed"
-    //     }
-    //     else {
-    //         return "keyboard-key"
-    //     }
-    // }
-
     function pressKey(tone) {
-        //var keys = [...pressed]
-        //keys[tone] = true
-        //setPressed(keys)
+        
+        props.tones.forEach((element, index) => {
+            if (index !== tone) {
+                element.stop()
+            }
+        });
         setPressed(true)
         props.tones[tone].play()
+        //setLastPlayed(tone)
         
     }
 
     function releaseKey(tone) {
-        //var keys = [...pressed]
-        //keys[tone] = false
-        //setPressed(keys)
         setPressed(false)
         props.tones[tone].stop()
     }
-
-
 
     useHotkeys('z', () => pressKey(0), {keydown:true}, [props.tones]);
     useHotkeys('z', () => releaseKey(0), {keyup:true}, [props.tones]);   
@@ -114,7 +91,5 @@ function Keyboard(props) {
           </div>
         </div>
     )
-
-
 }
 export default Keyboard
