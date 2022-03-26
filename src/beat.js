@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 
 function Beat(props) {
 
+    //new branch
 
     // on a new branch, try loading each sound ones and cloning them
     const snare1 = new Pizzicato.Sound(snare)
