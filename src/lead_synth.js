@@ -16,8 +16,8 @@ function LeadSynth() {
     const semitone_down = 246.94/261.63
     //261 is middle c
     const c_freq = [261.64, 293.68, 329.64, 349.24, 392, 440, 493.88, 523.24, 587.32, 659.24, 698.44, 784, 880, 987.76, 1046.52]
-
     const default_tones = []  
+
     var defaultLowPass = new Pizzicato.Effects.LowPassFilter({
         frequency: 500,
         peak: 10

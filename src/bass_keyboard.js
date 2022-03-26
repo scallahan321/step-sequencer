@@ -22,7 +22,6 @@ function BassKeyboard(props) {
     }
 
     function pressKey(tone) {
-        
         props.tones.forEach((element, index) => {
             if (index !== tone) {
                 element.stop()

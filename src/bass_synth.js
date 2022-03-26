@@ -24,8 +24,10 @@ function BassSynth() {
     }
    
     const [tones, setTones] = useState(default_tones)
-    const [frequencies, setFrequencies] = useState([c_freq])
+    const [frequencies, setFrequencies] = useState(c_freq)
     const [distortionOn, setdistortionOn] = useState(false)
+
+   
 
     const multipliers = {
         "c": 1,
@@ -57,10 +59,9 @@ function BassSynth() {
         {'label': 'Ab Major', 'value': 'a_flat' }
     ]
 
-    
-
-
-    var distortion = new Pizzicato.Effects.Distortion()
+    var distortion = new Pizzicato.Effects.Distortion({
+    gain: 0.4
+    });
 
     function toggleDistortion() {
         var isOn = distortionOn
@@ -80,9 +81,9 @@ function BassSynth() {
 
     function createWaves(scale, distortionBool) {
         var tones = []  
-        
         if (distortionBool) {
-            for (const element of scale) {
+            for (var element of scale) {
+                element = Math.round(element * 100) / 100
                 tones.push(new Pizzicato.Sound({ 
                     source: 'wave',
                     options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .05}
