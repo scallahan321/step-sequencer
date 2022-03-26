@@ -1,14 +1,15 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Pizzicato from 'pizzicato';
 import Button from 'react-bootstrap/Button';
-import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
+
 import LeadKeyboard from './lead_keyboard';
 import Form from 'react-bootstrap/Form'
 
 
 
-function LeadSynth() {
+
+function LeadSynth(props) {
 
     //roughly 1.059
     const semitone_up = 261.63/246.94
@@ -44,7 +45,12 @@ function LeadSynth() {
     const [tones, setTones] = useState(default_tones)
     const [frequencies, setFrequencies] = useState(c_freq)
     const [delayOn, setDelayOn] = useState(false)
+    const [delayDivision, setDelayDivision] = useState("eighth")
+    //const [delayTempo, setDelayTempo] = useState(300)
     const [reverbOn, setReverbOn] = useState(false)
+    const [delayButtonVariant, setDelayButtonVariant] = useState('outline-secondary')
+    const [reverbButtonVariant, setReverbButtonVariant] = useState('outline-secondary')
+    
 
     const multipliers = {
         "c": 1,
@@ -89,29 +95,36 @@ function LeadSynth() {
         ratio: 10
     });
 
-    var delay = new Pizzicato.Effects.Delay({
-        feedback: 0.2,
-        time: 0.520,
-        mix: 0.1
-    });
+    // var delay = new Pizzicato.Effects.Delay({
+    //     feedback: 0.2,
+    //     // time: 0.520,
+    //     time: delayTempo,
+    //     mix: 0.1
+    // });
 
     var reverb = new Pizzicato.Effects.Reverb({
-        time: .4,
-        decay: .3,
+        time: .7,
+        decay: .8,
         reverse: false,
-        mix: 0.2
+        mix: 0.4
     });
+
+   
+
+   
 
     function toggleDelay() {
         var isOn = delayOn
         if (!delayOn) {
-            const notes = createWaves(frequencies, true, reverbOn)
+            const notes = createWaves(frequencies, true, delayDivision, reverbOn)
             setTones(notes)
+            setDelayButtonVariant('secondary')
             isOn = true
         }
         else {
-            const notes = createWaves(frequencies, false, reverbOn)
+            const notes = createWaves(frequencies, false, delayDivision, reverbOn)
             setTones(notes)
+            setDelayButtonVariant('outline-secondary')
             isOn = false
         }
         setDelayOn(isOn)
@@ -120,13 +133,15 @@ function LeadSynth() {
     function toggleReverb() {
         var isOn = reverbOn
         if (!reverbOn) {
-            const notes = createWaves(frequencies, delayOn, true)
+            const notes = createWaves(frequencies, delayOn, delayDivision, true)
             setTones(notes)
+            setReverbButtonVariant('secondary')
             isOn = true
         }
         else {
-            const notes = createWaves(frequencies, delayOn, false)
+            const notes = createWaves(frequencies, delayOn, delayDivision, false)
             setTones(notes)
+            setReverbButtonVariant('outline-secondary')
             isOn = false
         }
         setReverbOn(isOn)
@@ -135,7 +150,7 @@ function LeadSynth() {
 
     
 
-    function createWaves(scale, delayBool, reverbBool) {
+    function createWaves(scale, delayBool, division, reverbBool) {
         var tones = []  
         for (const element of scale) {
             tones.push(new Pizzicato.Sound({ 
@@ -145,8 +160,44 @@ function LeadSynth() {
         }
         for (const tone of tones) {
             tone.addEffect(lowPassFilter)
+            
             if (delayBool) {
-                tone.addEffect(delay)
+                if (division==="eighth") {
+                    var delay_eighth = new Pizzicato.Effects.Delay({
+                        feedback: 0.3,
+                        time: (props.interval/1000),
+                        mix: 0.2
+                    })
+                    //setDelayDivision(division)
+                    tone.addEffect(delay_eighth)
+                }
+                else if (division==="quarter") {
+                    var delay_quarter = new Pizzicato.Effects.Delay({
+                        feedback: 0.3,
+                        time: (props.interval/500),
+                        mix: 0.2
+                    })
+                    //setDelayDivision(division)
+                    tone.addEffect(delay_quarter)
+                }
+                else if (division==="sixteenth") {
+                    var delay_sixteenth = new Pizzicato.Effects.Delay({
+                        feedback: 0.3,
+                        time: (props.interval / 2000),
+                        mix: 0.2
+                    })
+                    //setDelayDivision(division)
+                    tone.addEffect(delay_sixteenth)
+                }
+                else if (division==="dotted eighth") {
+                    var delay_dotted = new Pizzicato.Effects.Delay({
+                        feedback: .3,
+                        time: (props.interval/1000 * 1.5),
+                        mix: 0.2
+                    })
+                    //setDelayDivision(division)
+                    tone.addEffect(delay_dotted)
+                }
             }
             if (reverbBool) {
                 tone.addEffect(reverb)
@@ -157,13 +208,17 @@ function LeadSynth() {
         return tones
     }
 
-       
+    function handleDelayChange(val) {
+        setDelayDivision(val)
+        const notes = createWaves(frequencies, delayOn, val, reverbOn)
+        setTones(notes)
+    }
 
     function setScaleFreq(e) {
         const key = e.target.value
         const frequencies = c_freq.map((element) => element * multipliers[key])
         setFrequencies(frequencies)
-        const notes = createWaves(frequencies, delayOn, reverbOn)
+        const notes = createWaves(frequencies, delayOn, delayDivision, reverbOn)
         setTones(notes)
     }
 
@@ -174,11 +229,21 @@ function LeadSynth() {
                 <Form.Select onChange={e => {setScaleFreq(e)}}  style={{height:'3rem', display:'inline-block'}}>
                     <option value="" hidden> Change Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
-               </Form.Select>               
+                </Form.Select>  
+                <Button variant={delayButtonVariant} size= "lg" value="delay" onClick={toggleDelay}>toggle delay</Button>
+                <Form.Select onChange={e => {handleDelayChange(e.target.value)}}  style={{height:'3rem', display:'inline-block'}}>
+                    <option value="" hidden> delay division </option>
+                    <option value = "quarter">quarter note</option>
+                    <option value="eighth">eighth note</option>
+                    <option value = "dotted eighth">dotted eighth</option>
+                    <option value = "sixteenth">sixteenth note</option>
+                </Form.Select>  
+                <Button variant={reverbButtonVariant} size= "lg" value= "reverb" onClick={toggleReverb}>toggle reverb</Button>
+                    
             </div>
             
             
-            <LeadKeyboard tones={tones} toggleDelay={toggleDelay} toggleReverb={toggleReverb}/>
+            <LeadKeyboard tones={tones} delayOn={delayOn} reverbOn={reverbOn} toggleDelay={toggleDelay} toggleReverb={toggleReverb}/>
         </div>
     )
  

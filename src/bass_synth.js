@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Pizzicato from 'pizzicato';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
@@ -19,13 +19,14 @@ function BassSynth() {
     for (const element of c_freq) {
         default_tones.push(new Pizzicato.Sound({ 
             source: 'wave',
-            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .4}
+            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .6}
         }))
     }
    
     const [tones, setTones] = useState(default_tones)
     const [frequencies, setFrequencies] = useState(c_freq)
     const [distortionOn, setdistortionOn] = useState(false)
+    const [buttonVariant, setButtonVariant] = useState("outline-secondary")
 
    
 
@@ -68,11 +69,13 @@ function BassSynth() {
         if (!distortionOn) {
             const notes = createWaves(frequencies, true)
             setTones(notes)
+            setButtonVariant("secondary")
             isOn = true
         }
         else {
             const notes = createWaves(frequencies, false)
             setTones(notes)
+            setButtonVariant("outline-secondary")
             isOn = false
         }
         setdistortionOn(isOn)
@@ -97,7 +100,7 @@ function BassSynth() {
             for (const element of scale) {
                 tones.push(new Pizzicato.Sound({ 
                     source: 'wave',
-                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .4}
+                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .6}
                 }))
             }
         }
@@ -114,12 +117,15 @@ function BassSynth() {
   
     return (
         <div>
-
+             
+           
+        
             <Form.Select onChange={e => {setScaleFreq(e)}}  style={{height:'3rem'}} >
                     <option value="" hidden> Change Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
                </Form.Select>
-            <BassKeyboard tones={tones} toggleDistortion={toggleDistortion} />
+            <Button variant={buttonVariant} size= "lg" onClick={toggleDistortion}>toggle distortion</Button>
+            <BassKeyboard tones={tones}/>
         </div>
     )
  

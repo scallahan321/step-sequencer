@@ -9,6 +9,9 @@ function LeadKeyboard(props) {
 
     const [lastPlayed, setLastPlayed] = useState(null)
 
+    // const [delayButtonVariant, setDelayButtonVariant] = useState('outline-secondary')
+    // const [reverbButtonVariant, setReverbButtonVariant] = useState('outline-secondary')
+
 
     function keyClass(key) {
         if (isHotkeyPressed(key) && pressed) {
@@ -19,8 +22,30 @@ function LeadKeyboard(props) {
         }
     }
 
+    // function handleEffectClick(e) {
+    //     const effect = e.target.value
+    //     if (effect==="delay") {
+    //         props.toggleDelay()
+    //         if (props.delayOn) {
+    //             setDelayButtonVariant('outline-secondary')
+    //         }
+    //         else {
+    //             setDelayButtonVariant('secondary')
+    //         }
+    //     }
+    //     else {
+    //         props.toggleReverb()
+    //         if (props.reverbOn) {
+    //             setReverbButtonVariant('outline-secondary')
+    //         }
+    //         else {
+    //             setReverbButtonVariant('secondary')
+    //         }
+    //     }
+    // }
+
+
     function pressKey(tone) {
-        
         props.tones.forEach((element, index) => {
             if (index !== tone) {
                 element.stop()
@@ -29,8 +54,8 @@ function LeadKeyboard(props) {
         setPressed(true)
         props.tones[tone].play()
         //setLastPlayed(tone)
-        
     }
+
 
     function releaseKey(tone) {
         setPressed(false)
@@ -71,10 +96,10 @@ function LeadKeyboard(props) {
 
     return (
         <div>
-          <div className = "effects">
-            <Button variant="secondary" onClick={props.toggleDelay}>toggle delay</Button>
-            <Button variant="secondary" onClick={props.toggleReverb}>toggle reverb</Button>
-          </div>
+          {/* <div className = "effects">
+            <Button variant={delayButtonVariant} value="delay" onClick={(e) => handleEffectClick(e)}>toggle delay</Button>
+            <Button variant={reverbButtonVariant} value= "reverb" onClick={(e) => handleEffectClick(e)}>toggle reverb</Button>
+          </div> */}
           <div className = "top-row-keys">
             <div className = {keyClass("q")}> <p className="key-label">q</p> </div>
             <div className = {keyClass("w")}> <p className="key-label">w</p> </div>

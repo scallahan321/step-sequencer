@@ -61,9 +61,7 @@ function BassKeyboard(props) {
 
     return (
         <div>
-          <div className = "effects">
-            <Button variant="secondary" onClick={props.toggleDistortion}>toggle distortion</Button>
-          </div>
+         
           <div className = "bottom-row-keys">
             <div className = {keyClass("z")}> <p className="key-label">z</p> </div>
             <div className = {keyClass("x")}> <p className="key-label">x</p> </div>
