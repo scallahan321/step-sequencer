@@ -68,18 +68,18 @@ function LeadSynth(props) {
     }
 
     const dropdownValues = [
-        {'label': 'C Major', 'value': 'c' },
-        {'label': 'C# Major', 'value': 'c_sharp' },
-        {'label': 'D Major', 'value': 'd' },
-        {'label': 'Eb Major', 'value': 'e_flat' },
-        {'label': 'E Major', 'value': 'e' },
-        {'label': 'F Major', 'value': 'f' },
-        {'label': 'F# Major', 'value': 'f_sharp' },
-        {'label': 'G Major', 'value': 'g' },
-        {'label': 'B Major', 'value': 'b' },
-        {'label': 'Bb Major', 'value': 'b_flat' },
-        {'label': 'A Major', 'value': 'a' },
-        {'label': 'Ab Major', 'value': 'a_flat' }
+        {'label': ' C Major', 'value': 'c' },
+        {'label': ' C# Major', 'value': 'c_sharp' },
+        {'label': ' D Major', 'value': 'd' },
+        {'label': ' Eb Major', 'value': 'e_flat' },
+        {'label': ' E Major', 'value': 'e' },
+        {'label': ' F Major', 'value': 'f' },
+        {'label': ' F# Major', 'value': 'f_sharp' },
+        {'label': ' G Major', 'value': 'g' },
+        {'label': ' B Major', 'value': 'b' },
+        {'label': ' Bb Major', 'value': 'b_flat' },
+        {'label': ' A Major', 'value': 'a' },
+        {'label': ' Ab Major', 'value': 'a_flat' }
     ]
 
     var lowPassFilter = new Pizzicato.Effects.LowPassFilter({
