@@ -14,9 +14,18 @@ function BassSynth() {
     const semitone_down = 246.94/261.63
     //261 is middle c
     const c_freq = [65.41, 73.42, 82.41, 87.31, 98.00, 110.00, 123.47, 130.81, 146.83, 164.81]
-    const [tones, setTones] = useState([])
-    const [frequencies, setFrequencies] = useState([])
-    const [flangerOn, setFlangerOn] = useState(false)
+    const default_tones = []  
+   
+    for (const element of c_freq) {
+        default_tones.push(new Pizzicato.Sound({ 
+            source: 'wave',
+            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .4}
+        }))
+    }
+   
+    const [tones, setTones] = useState(default_tones)
+    const [frequencies, setFrequencies] = useState([c_freq])
+    const [distortionOn, setdistortionOn] = useState(false)
 
     const multipliers = {
         "c": 1,
@@ -48,25 +57,14 @@ function BassSynth() {
         {'label': 'Ab Major', 'value': 'a_flat' }
     ]
 
-    var lowPassFilter = new Pizzicato.Effects.LowPassFilter({
-        frequency: 500,
-        peak: 10
-    });
-
-    var compressor = new Pizzicato.Effects.Compressor({
-        threshold: -20,
-        knee: 22,
-        attack: 0.05,
-        release: 0.05,
-        ratio: 10
-    });
+    
 
 
     var distortion = new Pizzicato.Effects.Distortion()
 
-    function toggleFlanger() {
-        var isOn = flangerOn
-        if (!flangerOn) {
+    function toggleDistortion() {
+        var isOn = distortionOn
+        if (!distortionOn) {
             const notes = createWaves(frequencies, true)
             setTones(notes)
             isOn = true
@@ -76,14 +74,14 @@ function BassSynth() {
             setTones(notes)
             isOn = false
         }
-        setFlangerOn(isOn)
+        setdistortionOn(isOn)
     }
 
 
-    function createWaves(scale, flangerBool) {
+    function createWaves(scale, distortionBool) {
         var tones = []  
-        // flange is boosting volume, need to make initial volume lower if turned on
-        if (flangerBool) {
+        
+        if (distortionBool) {
             for (const element of scale) {
                 tones.push(new Pizzicato.Sound({ 
                     source: 'wave',
@@ -92,7 +90,6 @@ function BassSynth() {
             }
             for (const tone of tones) {
                 tone.addEffect(distortion) 
-                
             }
         }
         else {
@@ -102,9 +99,6 @@ function BassSynth() {
                     options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .4}
                 }))
             }
-            for (const tone of tones) {
-                
-            }
         }
         return tones
     }
@@ -113,7 +107,7 @@ function BassSynth() {
         const key = e.target.value
         const frequencies = c_freq.map((element) => element * multipliers[key])
         setFrequencies(frequencies)
-        const notes = createWaves(frequencies, flangerOn)
+        const notes = createWaves(frequencies, distortionOn)
         setTones(notes)
     }
   
@@ -124,7 +118,7 @@ function BassSynth() {
                     <option value="" hidden> Change Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
                </Form.Select>
-            <BassKeyboard tones={tones} toggleFlanger={toggleFlanger} />
+            <BassKeyboard tones={tones} toggleDistortion={toggleDistortion} />
         </div>
     )
  

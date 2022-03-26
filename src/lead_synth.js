@@ -16,13 +16,35 @@ function LeadSynth() {
     const semitone_down = 246.94/261.63
     //261 is middle c
     const c_freq = [261.64, 293.68, 329.64, 349.24, 392, 440, 493.88, 523.24, 587.32, 659.24, 698.44, 784, 880, 987.76, 1046.52]
-    const [tones, setTones] = useState([])
-    const [frequencies, setFrequencies] = useState([])
+
+    const default_tones = []  
+    var defaultLowPass = new Pizzicato.Effects.LowPassFilter({
+        frequency: 500,
+        peak: 10
+    })
+    var defaultCompressor = new Pizzicato.Effects.Compressor({
+        threshold: -20,
+        knee: 22,
+        attack: 0.05,
+        release: 0.05,
+        ratio: 10
+    })
+    for (const element of c_freq) {
+        default_tones.push(new Pizzicato.Sound({ 
+            source: 'wave',
+            options: { type: 'sawtooth', frequency: element , release: 0.2, attack: 0.7, volume: .001}
+        }))
+    }
+    for (const tone of default_tones) {
+        tone.addEffect(defaultLowPass)
+        tone.addEffect(defaultCompressor)   
+    }
+
+
+    const [tones, setTones] = useState(default_tones)
+    const [frequencies, setFrequencies] = useState(c_freq)
     const [delayOn, setDelayOn] = useState(false)
     const [reverbOn, setReverbOn] = useState(false)
-
-  
-
 
     const multipliers = {
         "c": 1,
@@ -134,6 +156,8 @@ function LeadSynth() {
         }
         return tones
     }
+
+       
 
     function setScaleFreq(e) {
         const key = e.target.value

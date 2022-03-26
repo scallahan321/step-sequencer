@@ -278,7 +278,7 @@ function Beat() {
         <Button variant={setButtonVariant(hatSteps[14])} value='14' onClick={ e => handleHatClick(e)}> 15 </Button>
         <Button variant={setButtonVariant(hatSteps[15])} value='15' onClick={ e => handleHatClick(e)}> 16 </Button>
       </div>
-      <BassSynth />
+      
       </div>
   );
 }

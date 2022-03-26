@@ -61,9 +61,9 @@ function BassKeyboard(props) {
     useHotkeys('/', () => releaseKey(9), {keyup:true}, [props.tones]);
 
     return (
-        <div style={{border: "2px dotted purple"}}>
+        <div>
           <div className = "effects">
-            <Button variant="secondary" onClick={props.toggleFlanger}>toggle flanger</Button>
+            <Button variant="secondary" onClick={props.toggleDistortion}>toggle distortion</Button>
           </div>
           <div className = "bottom-row-keys">
             <div className = {keyClass("z")}> <p className="key-label">z</p> </div>

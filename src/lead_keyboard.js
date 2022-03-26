@@ -70,7 +70,7 @@ function LeadKeyboard(props) {
 
 
     return (
-        <div style={{border: "2px dotted purple"}}>
+        <div>
           <div className = "effects">
             {/* <Button variant="secondary" onClick={props.turnDelayOn}>test add delay</Button>
             <Button variant="secondary" onClick={props.turnDelayOff}>test remove delay</Button> */}
