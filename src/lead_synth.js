@@ -33,7 +33,7 @@ function LeadSynth(props) {
     for (const element of c_freq) {
         default_tones.push(new Pizzicato.Sound({ 
             source: 'wave',
-            options: { type: 'sawtooth', frequency: element , release: 0.2, attack: 0.7, volume: .001}
+            options: { type: 'sawtooth', frequency: element , release: 0.2, attack: 0.7, volume: .01}
         }))
     }
     for (const tone of default_tones) {
@@ -155,7 +155,7 @@ function LeadSynth(props) {
         for (const element of scale) {
             tones.push(new Pizzicato.Sound({ 
                 source: 'wave',
-                options: { type: 'sawtooth', frequency: element , release: 0.2, attack: 0.7, volume: .001}
+                options: { type: 'sawtooth', frequency: element , release: 0.2, attack: 0.7, volume: .01}
             }))
         }
         for (const tone of tones) {

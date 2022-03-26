@@ -19,7 +19,7 @@ function BassSynth() {
     for (const element of c_freq) {
         default_tones.push(new Pizzicato.Sound({ 
             source: 'wave',
-            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .6}
+            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .75}
         }))
     }
    
@@ -89,7 +89,7 @@ function BassSynth() {
                 element = Math.round(element * 100) / 100
                 tones.push(new Pizzicato.Sound({ 
                     source: 'wave',
-                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .05}
+                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .1}
                 }))
             }
             for (const tone of tones) {
@@ -100,7 +100,7 @@ function BassSynth() {
             for (const element of scale) {
                 tones.push(new Pizzicato.Sound({ 
                     source: 'wave',
-                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .6}
+                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .75}
                 }))
             }
         }
