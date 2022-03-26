@@ -9,9 +9,6 @@ function LeadKeyboard(props) {
 
     const [lastPlayed, setLastPlayed] = useState(null)
 
-    // const [delayButtonVariant, setDelayButtonVariant] = useState('outline-secondary')
-    // const [reverbButtonVariant, setReverbButtonVariant] = useState('outline-secondary')
-
 
     function keyClass(key) {
         if (isHotkeyPressed(key) && pressed) {
@@ -21,28 +18,6 @@ function LeadKeyboard(props) {
             return "keyboard-key"
         }
     }
-
-    // function handleEffectClick(e) {
-    //     const effect = e.target.value
-    //     if (effect==="delay") {
-    //         props.toggleDelay()
-    //         if (props.delayOn) {
-    //             setDelayButtonVariant('outline-secondary')
-    //         }
-    //         else {
-    //             setDelayButtonVariant('secondary')
-    //         }
-    //     }
-    //     else {
-    //         props.toggleReverb()
-    //         if (props.reverbOn) {
-    //             setReverbButtonVariant('outline-secondary')
-    //         }
-    //         else {
-    //             setReverbButtonVariant('secondary')
-    //         }
-    //     }
-    // }
 
 
     function pressKey(tone) {

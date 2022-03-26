@@ -48,8 +48,15 @@ function LeadSynth(props) {
     const [delayDivision, setDelayDivision] = useState("eighth")
     //const [delayTempo, setDelayTempo] = useState(300)
     const [reverbOn, setReverbOn] = useState(false)
-    const [delayButtonVariant, setDelayButtonVariant] = useState('outline-secondary')
-    const [reverbButtonVariant, setReverbButtonVariant] = useState('outline-secondary')
+    const [toggleDelayVariant, setToggleDelayVariant] = useState('outline-secondary')
+    const [toggleReverbVariant, setToggleReverbVariant] = useState('outline-secondary')
+    const [key, setKey] = useState("c")
+    const [keyFormDisabled, setKeyFormDisabled] = useState(false)
+    const [keySubmitButtonVariant, setKeySubmitButtonVariant] = useState('outline-secondary')
+    const [delayDivisionVariant, setDelayDivisionVariant] = useState('outline-secondary')
+    const [delayFormDisabled, setDelayFormDisabled] = useState(false)
+ 
+
     
 
     const multipliers = {
@@ -114,34 +121,40 @@ function LeadSynth(props) {
    
 
     function toggleDelay() {
+        for (const tone of tones) {
+            tone.stop()
+        }
         var isOn = delayOn
         if (!delayOn) {
             const notes = createWaves(frequencies, true, delayDivision, reverbOn)
             setTones(notes)
-            setDelayButtonVariant('secondary')
+            setToggleDelayVariant('secondary')
             isOn = true
         }
         else {
             const notes = createWaves(frequencies, false, delayDivision, reverbOn)
             setTones(notes)
-            setDelayButtonVariant('outline-secondary')
+            setToggleDelayVariant('outline-secondary')
             isOn = false
         }
         setDelayOn(isOn)
     }
 
     function toggleReverb() {
+        for (const tone of tones) {
+            tone.stop()
+        }
         var isOn = reverbOn
         if (!reverbOn) {
             const notes = createWaves(frequencies, delayOn, delayDivision, true)
             setTones(notes)
-            setReverbButtonVariant('secondary')
+            setToggleReverbVariant('secondary')
             isOn = true
         }
         else {
             const notes = createWaves(frequencies, delayOn, delayDivision, false)
             setTones(notes)
-            setReverbButtonVariant('outline-secondary')
+            setToggleReverbVariant('outline-secondary')
             isOn = false
         }
         setReverbOn(isOn)
@@ -208,10 +221,24 @@ function LeadSynth(props) {
         return tones
     }
 
-    function handleDelayChange(val) {
-        setDelayDivision(val)
-        const notes = createWaves(frequencies, delayOn, val, reverbOn)
+    function handleDelayChange(e) {
+        for (const tone of tones) {
+            tone.stop()
+        }
+        setDelayDivision(e.target.value)
+        setDelayFormDisabled(true)
+        setDelayDivisionVariant('info')
+    }
+
+    function handleDelaySubmit() {
+        //const val = e.target.value
+        for (const tone of tones) {
+            tone.stop()
+        }
+        const notes = createWaves(frequencies, delayOn, delayDivision, reverbOn)
         setTones(notes)
+        setDelayFormDisabled(false)
+        setDelayDivisionVariant('outline-secondary')  
     }
 
     function setScaleFreq(e) {
@@ -222,24 +249,46 @@ function LeadSynth(props) {
         setTones(notes)
     }
 
+    function handleKeyChange(e) {
+        for (const tone of tones) {
+            tone.stop()
+        }
+        setKey(e.target.value)
+        setKeyFormDisabled(true)
+        setKeySubmitButtonVariant('info')
+      
+    }
+
+    function handleKeySubmit(e) {
+        for (const tone of tones) {
+            tone.stop()
+        }
+        setScaleFreq(e)
+        setKeyFormDisabled(false)
+        setKeySubmitButtonVariant('outline-secondary')
+      
+    }
+
   
     return (
         <div>
             <div className="lead-controls">
-                <Form.Select onChange={e => {setScaleFreq(e)}}  style={{height:'3rem', display:'inline-block'}}>
-                    <option value="" hidden> Change Key </option>
+                <Form.Select onChange={e => handleKeyChange(e)} disabled={keyFormDisabled}  style={{height:'3rem', display:'inline-block'}}>
+                    <option value="" hidden> Select Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
                 </Form.Select>  
-                <Button variant={delayButtonVariant} size= "lg" value="delay" onClick={toggleDelay}>toggle delay</Button>
-                <Form.Select onChange={e => {handleDelayChange(e.target.value)}}  style={{height:'3rem', display:'inline-block'}}>
+                <Button variant={keySubmitButtonVariant} size= "lg" value={key} onClick={e => handleKeySubmit(e)}>update key</Button>
+                <Button variant={toggleDelayVariant} size= "lg" value="delay" onClick={toggleDelay}>toggle delay</Button>
+                <Form.Select onChange={e => {handleDelayChange(e)}} disabled={delayFormDisabled}  style={{height:'3rem', display:'inline-block'}}>
                     <option value="" hidden> delay division </option>
                     <option value = "quarter">quarter note</option>
                     <option value="eighth">eighth note</option>
                     <option value = "dotted eighth">dotted eighth</option>
                     <option value = "sixteenth">sixteenth note</option>
                 </Form.Select>  
-                <Button variant={reverbButtonVariant} size= "lg" value= "reverb" onClick={toggleReverb}>toggle reverb</Button>
-                    
+                <Button variant={delayDivisionVariant} size= "lg" value={delayDivision} onClick={handleDelaySubmit}>update delay</Button>
+
+                <Button variant={toggleReverbVariant} size= "lg" value= "reverb" onClick={toggleReverb}>toggle reverb</Button>
             </div>
             
             

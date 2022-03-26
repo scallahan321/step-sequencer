@@ -105,7 +105,7 @@ function Beat(props) {
     }
 
     var distortion = new Pizzicato.Effects.Distortion({
-        gain: 0.5
+        gain: 0.3
     });
 
     useInterval(() => {

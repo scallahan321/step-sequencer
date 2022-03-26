@@ -1,9 +1,10 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Pizzicato from 'pizzicato';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import BassKeyboard from './bass_keyboard';
+import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 
 
 function BassSynth() {
@@ -19,16 +20,19 @@ function BassSynth() {
     for (const element of c_freq) {
         default_tones.push(new Pizzicato.Sound({ 
             source: 'wave',
-            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .75}
+            options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .8}
         }))
     }
    
     const [tones, setTones] = useState(default_tones)
     const [frequencies, setFrequencies] = useState(c_freq)
     const [distortionOn, setdistortionOn] = useState(false)
-    const [buttonVariant, setButtonVariant] = useState("outline-secondary")
-
-   
+    const [submitButtonVariant, setSubmitButtonVariant] = useState("outline-secondary")
+    const [distButtonVariant, setDistButtonVariant] = useState("outline-secondary")
+    const [keyFormDisabled, setKeyFormDisabled] = useState(false)
+   // const [formChange, setFormChange] = useState(false)
+    const [key, setKey] = useState("c")
+  
 
     const multipliers = {
         "c": 1,
@@ -64,21 +68,27 @@ function BassSynth() {
     gain: 0.4
     });
 
+   
+
     function toggleDistortion() {
+        for (const tone of tones) {
+            tone.stop()
+        }
         var isOn = distortionOn
         if (!distortionOn) {
             const notes = createWaves(frequencies, true)
             setTones(notes)
-            setButtonVariant("secondary")
+            setDistButtonVariant("secondary")
             isOn = true
         }
         else {
             const notes = createWaves(frequencies, false)
             setTones(notes)
-            setButtonVariant("outline-secondary")
+            setDistButtonVariant("outline-secondary")
             isOn = false
         }
         setdistortionOn(isOn)
+        
     }
 
 
@@ -100,11 +110,31 @@ function BassSynth() {
             for (const element of scale) {
                 tones.push(new Pizzicato.Sound({ 
                     source: 'wave',
-                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .75}
+                    options: { type: 'sine', frequency: element , release: 0.1, attack: 0.1, volume: .8}
                 }))
             }
         }
         return tones
+    }
+
+    function handleKeyChange(e) {
+        for (const tone of tones) {
+            tone.stop()
+        }
+        setKey(e.target.value)
+        setKeyFormDisabled(true)
+        setSubmitButtonVariant('info')
+       // setFormChange(true)
+    }
+
+    function handleKeySubmit(e) {
+        for (const tone of tones) {
+            tone.stop()
+        }
+        setScaleFreq(e)
+        setKeyFormDisabled(false)
+        setSubmitButtonVariant('outline-secondary')
+        //setFormChange(false)
     }
 
     function setScaleFreq(e) {
@@ -114,17 +144,20 @@ function BassSynth() {
         const notes = createWaves(frequencies, distortionOn)
         setTones(notes)
     }
+
+    
   
     return (
         <div>
              
            
         
-            <Form.Select onChange={e => {setScaleFreq(e)}}  style={{height:'3rem'}} >
+            <Form.Select onChange={e => handleKeyChange(e)} disabled={keyFormDisabled}  style={{height:'3rem'}} >
                     <option value="" hidden> Change Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
-               </Form.Select>
-            <Button variant={buttonVariant} size= "lg" onClick={toggleDistortion}>toggle distortion</Button>
+            </Form.Select>
+            <Button variant={submitButtonVariant} size= "lg" value={key} onClick={e => handleKeySubmit(e)}>update key</Button>
+            <Button variant={distButtonVariant} size= "lg" onClick={toggleDistortion} >toggle distortion</Button>
             <BassKeyboard tones={tones}/>
         </div>
     )

@@ -4,13 +4,9 @@ import Button from 'react-bootstrap/Button';
 
 function BassKeyboard(props) {
 
-    
-
-
     const [pressed, setPressed] = useState(false)
 
     const [lastPlayed, setLastPlayed] = useState(null)
-
 
     function keyClass(key) {
         if (isHotkeyPressed(key) && pressed) {
