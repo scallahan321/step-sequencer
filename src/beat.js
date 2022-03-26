@@ -42,6 +42,8 @@ function Beat() {
 
     // can clone sound objects with sound.clone();
 
+    // test branch
+
     var flanger = new Pizzicato.Effects.Flanger({
         time: 0.45,
         speed: 0.2,
@@ -206,11 +208,6 @@ function Beat() {
         reverse: false,
         mix: 0.5
     });
-
-    
-
-
-    
 
   return (
       <div>
