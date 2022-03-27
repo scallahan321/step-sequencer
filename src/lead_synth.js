@@ -7,7 +7,7 @@ import LeadKeyboard from './lead_keyboard';
 import Form from 'react-bootstrap/Form'
 
 
-//test form
+//delay button
 
 function LeadSynth(props) {
 
