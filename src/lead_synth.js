@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 import LeadKeyboard from './lead_keyboard';
 import Form from 'react-bootstrap/Form'
+import LeadControls from './lead_controls';
 
 
 //delay button
@@ -117,9 +118,6 @@ function LeadSynth(props) {
     });
 
    
-
-   
-
     function toggleDelay() {
         for (const tone of tones) {
             tone.stop()
@@ -160,8 +158,6 @@ function LeadSynth(props) {
         setReverbOn(isOn)
     }
 
-
-    
 
     function createWaves(scale, delayBool, division, reverbBool) {
         var tones = []  
@@ -241,38 +237,39 @@ function LeadSynth(props) {
         setDelayDivisionVariant('outline-secondary')  
     }
 
-    function setScaleFreq(e) {
-        const key = e.target.value
+    function setScaleFreq(key) {
+        //const key = e.target.value
         const frequencies = c_freq.map((element) => element * multipliers[key])
         setFrequencies(frequencies)
         const notes = createWaves(frequencies, delayOn, delayDivision, reverbOn)
         setTones(notes)
     }
 
-    function handleKeyChange(e) {
+    function handleKeyChange(key) {
         for (const tone of tones) {
             tone.stop()
         }
-        setKey(e.target.value)
-        setKeyFormDisabled(true)
-        setKeySubmitButtonVariant('info')
+        setKey(key)
+        setScaleFreq(key)
+        //setKeyFormDisabled(true)
+        //setKeySubmitButtonVariant('info')
       
     }
 
-    function handleKeySubmit(e) {
-        for (const tone of tones) {
-            tone.stop()
-        }
-        setScaleFreq(e)
-        setKeyFormDisabled(false)
-        setKeySubmitButtonVariant('outline-secondary')
+    // function handleKeySubmit(e) {
+    //     for (const tone of tones) {
+    //         tone.stop()
+    //     }
+    //     setScaleFreq(e)
+    //     setKeyFormDisabled(false)
+    //     setKeySubmitButtonVariant('outline-secondary')
       
-    }
+    // }
 
   
     return (
-        <div>
-            <div className="lead-controls">
+        <div style={{height:'100%'}}>
+            {/* <div className="lead-controls">
                 <Form.Select onChange={e => handleKeyChange(e)} disabled={keyFormDisabled}  style={{height:'3rem', display:'inline-block'}}>
                     <option value="" hidden> Select Key </option>
                    {dropdownValues.map((item) => <option key = {item.label} value={item.value}>{item.label}</option>)}
@@ -289,10 +286,24 @@ function LeadSynth(props) {
                 <Button variant={delayDivisionVariant} size= "lg" value={delayDivision} onClick={handleDelaySubmit}>update delay</Button>
 
                 <Button variant={toggleReverbVariant} size= "lg" value= "reverb" onClick={toggleReverb}>toggle reverb</Button>
-            </div>
+            </div> */}
             
-            
-            <LeadKeyboard tones={tones} delayOn={delayOn} reverbOn={reverbOn} toggleDelay={toggleDelay} toggleReverb={toggleReverb}/>
+            <LeadControls 
+            handleKeyChange={handleKeyChange} 
+            keyFormDisabled={keyFormDisabled} 
+            dropdownValues={dropdownValues}
+            keySubmitButtonVariant={keySubmitButtonVariant}
+            toggleDelayVariant={toggleDelayVariant}
+            toggleDelay={toggleDelay}
+            handleDelayChange={handleDelayChange}
+            handleDelaySubmit={handleDelaySubmit}
+            delayFormDisabled={delayFormDisabled}
+            delayDivisionVariant={delayDivisionVariant}
+            delayDivision={delayDivision}
+            toggleReverbVariant={toggleReverbVariant}
+            toggleReverb={toggleReverb}
+            />
+            <LeadKeyboard tones={tones}/>
         </div>
     )
  

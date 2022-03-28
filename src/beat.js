@@ -7,6 +7,7 @@ import hihat from './sounds/hihat.mp3';
 import crash from './sounds/crash.mp3'
 import useInterval from './use_interval';
 import Button from 'react-bootstrap/Button';
+import DrumMachine from './drum_machine.js'
 
 
 function Beat(props) {
@@ -223,37 +224,19 @@ function Beat(props) {
         setBoolArray([])
     }
 
-    // function toggleReverb() {
-    //     var variants = [...buttonVariant]
-    //     if (!reverbOn) {
-    //         setReverbOn(true)
-    //         variants[3] = "secondary"
-    //     }
-    //     else {
-    //         setReverbOn(false)
-    //         variants[3] = "outline-secondary" 
-    //     }
-    //     setButtonVariant(variants)
-    // }
-
-    // var reverb = new Pizzicato.Effects.Reverb({
-    //     time: .7,
-    //     decay: .7,
-    //     reverse: false,
-    //     mix: 0.5
-    // });
+    
 
   return (
-      <div>
-      <div>
+      <div style={{height:'100%', width:'100%'}}>
+      {/* <div>
         <Button variant={buttonVariant[0]} size= "lg" onClick={play}>play</Button>
         <Button variant={buttonVariant[1]} size= "lg"  onClick={stop}>stop</Button>
         <Button variant={buttonVariant[2]} size= "lg"  onClick={clear}>clear</Button>
-        {/* <Button variant={buttonVariant[3]} size= "lg"  onClick={toggleReverb}>reverb</Button> */}
+        {/* <Button variant={buttonVariant[3]} size= "lg"  onClick={toggleReverb}>reverb</Button> </div>  */}
 
        
-      </div>
-      <div id = "snare">
+     
+      {/* <div id = "snare">
         <p style={{display:'block'}}>snare</p>
         <Button variant={setStepButtonVariant(snareSteps[0])} value='0' onClick={ e => handleSnareClick(e)}> 1</Button>
         <Button variant={setStepButtonVariant(snareSteps[1])} value='1'  onClick={ e => handleSnareClick(e)}> 2 </Button>
@@ -329,7 +312,18 @@ function Beat(props) {
         <Button variant={setStepButtonVariant(cymbalSteps[14])} value='14' onClick={ e => handleCymbalClick(e)}> 15 </Button>
         <Button variant={setStepButtonVariant(cymbalSteps[15])} value='15' onClick={ e => handleCymbalClick(e)}> 16 </Button>
       </div>
-      
+       */}
+        <DrumMachine 
+        setStepButtonVariant={setStepButtonVariant}
+        snareSteps={snareSteps}
+        handleSnareClick={handleSnareClick}  
+        kickSteps={kickSteps}
+        handleKickClick={handleKickClick}
+        hatSteps={hatSteps}
+        handleHatClick={handleHatClick}
+        cymbalSteps={cymbalSteps}
+        handleCymbalClick={handleCymbalClick}
+        />
       </div>
   );
 }

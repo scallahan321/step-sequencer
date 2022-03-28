@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
-import Button from 'react-bootstrap/Button';
+
 
 function LeadKeyboard(props) {
 
 
     const [pressed, setPressed] = useState(false)
-
-    const [lastPlayed, setLastPlayed] = useState(null)
 
 
     function keyClass(key) {
@@ -71,10 +69,6 @@ function LeadKeyboard(props) {
 
     return (
         <div>
-          {/* <div className = "effects">
-            <Button variant={delayButtonVariant} value="delay" onClick={(e) => handleEffectClick(e)}>toggle delay</Button>
-            <Button variant={reverbButtonVariant} value= "reverb" onClick={(e) => handleEffectClick(e)}>toggle reverb</Button>
-          </div> */}
           <div className = "top-row-keys">
             <div className = {keyClass("q")}> <p className="key-label">q</p> </div>
             <div className = {keyClass("w")}> <p className="key-label">w</p> </div>
