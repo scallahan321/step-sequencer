@@ -116,17 +116,22 @@ function DrumMachine(props) {
     return (
         <div style={{height:'100%', width:'100%'}}>
             <div style={{display: 'inline-block', height: '100%', width:'100%', border:'2px solid green'}}>
+                
                 <div className="d-flex step-row">
+                    <p style={{display:'inline-block', width:'10%'}}>snare</p>
                     {index.map((item) => mapButtons(item, "snare"))}
                 </div>
                 <div className="d-flex step-row">
+                    <p style={{display:'inline-block', width:'10%'}}>kick</p>
                     {index.map((item) => mapButtons(item, "kick"))}  
                 </div>
 
                 <div className="d-flex step-row">
+                    <p style={{display:'inline-block', width:'10%'}}>hihat</p>
                     {index.map((item) => mapButtons(item, "hat"))}
                 </div>
                 <div className="d-flex step-row">
+                    <p style={{display:'inline-block', width:'10%'}}>crash</p>
                     {index.map((item) => mapButtons(item, "cymbal"))}
                 </div>
             </div>

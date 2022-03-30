@@ -50,15 +50,12 @@ function BassKeyboard(props) {
     useHotkeys('m', () => releaseKey(6), {keyup:true}, [props.tones]);
     useHotkeys(',', () => pressKey(7), {keydown:true}, [props.tones]);
     useHotkeys(',', () => releaseKey(7), {keyup:true}, [props.tones]);
-    useHotkeys('.', () => pressKey(8), {keydown:true}, [props.tones]);
-    useHotkeys('.', () => releaseKey(8), {keyup:true}, [props.tones]);
-    useHotkeys('/', () => pressKey(9), {keydown:true}, [props.tones]);
-    useHotkeys('/', () => releaseKey(9), {keyup:true}, [props.tones]);
+
 
     return (
         <div>
          
-          <div className = "bottom-row-keys">
+          <div>
             <div className = {keyClass("z")}> <p className="key-label">z</p> </div>
             <div className = {keyClass("x")}> <p className="key-label">x</p> </div>
             <div className = {keyClass("c")}> <p className="key-label">c</p> </div>
@@ -67,8 +64,6 @@ function BassKeyboard(props) {
             <div className = {keyClass("n")}> <p className="key-label">n</p> </div>
             <div className = {keyClass("m")}> <p className="key-label">m</p> </div>
             <div className = {keyClass(",")}> <p className="key-label">,</p> </div>
-            <div className = {keyClass(".")}> <p className="key-label">.</p> </div>
-            <div className = {keyClass("/")}> <p className="key-label">/</p> </div>
           </div>
        
         </div>

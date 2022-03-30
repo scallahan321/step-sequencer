@@ -79,7 +79,7 @@ function LeadKeyboard(props) {
             <div className = {keyClass("u")}> <p className="key-label">u</p> </div>
             <div className = {keyClass("i")}> <p className="key-label">i</p> </div>
           </div>
-          <div className = "middle-row-keys">
+          <div className = "bottom-row-keys">
             <div className = {keyClass("a")}> <p className="key-label">a</p> </div>
             <div className = {keyClass("s")}> <p className="key-label">s</p> </div>
             <div className = {keyClass("d")}> <p className="key-label">d</p> </div>

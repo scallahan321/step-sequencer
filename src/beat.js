@@ -227,12 +227,12 @@ function Beat(props) {
     
 
   return (
-      <div style={{height:'100%', width:'100%'}}>
-      {/* <div>
+    <div style={{height:'100%', width:'100%'}}>
+      <div style={{height:'10%', width:'30%', marginLeft:'35%'}}>
         <Button variant={buttonVariant[0]} size= "lg" onClick={play}>play</Button>
         <Button variant={buttonVariant[1]} size= "lg"  onClick={stop}>stop</Button>
         <Button variant={buttonVariant[2]} size= "lg"  onClick={clear}>clear</Button>
-        {/* <Button variant={buttonVariant[3]} size= "lg"  onClick={toggleReverb}>reverb</Button> </div>  */}
+        </div>
 
        
      
@@ -313,7 +313,8 @@ function Beat(props) {
         <Button variant={setStepButtonVariant(cymbalSteps[15])} value='15' onClick={ e => handleCymbalClick(e)}> 16 </Button>
       </div>
        */}
-        <DrumMachine 
+       <div style={{height:'90%'}}>
+       <DrumMachine 
         setStepButtonVariant={setStepButtonVariant}
         snareSteps={snareSteps}
         handleSnareClick={handleSnareClick}  
@@ -324,6 +325,8 @@ function Beat(props) {
         cymbalSteps={cymbalSteps}
         handleCymbalClick={handleCymbalClick}
         />
+       </div>
+       
       </div>
   );
 }

@@ -1,11 +1,8 @@
 import './App.css';
 import React, { useState } from 'react';
+import BassKeyboard from "./bass_keyboard"
 
-import LeadKeyboard from './lead_keyboard';
-
-
-
-function LeadControls(props) {
+function BassControls(props) {
 
     const keys = ['a_flat', 'a', 'b_flat', 'b', 'c', 'c_sharp', 'd', 'e_flat', 'e', 'f', 'f_sharp', 'g']
     const keyLabels = ['Ab', 'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G']
@@ -40,37 +37,20 @@ function LeadControls(props) {
         }
     }
 
-   
     return (
         <div style={{height:'100%', width:'100%'}}>
-            <div className="lead-top-panel">
+            <div className="bass-top-panel">
                 <div style={{display:'inline-block', verticalAlign: 'top', height:'100%', width:'30%'}}>
                     <p style={{fontWeight: 'bold', color:'white', height:'25%', marginTop:'3%', textAlign:'center'}}>Shift Key</p>
                     <div style={{height: '70%', marginBottom:'5rem'}}>
                         <button value="up" onClick={(e) => keyChange(e)} style={{display:'inline-block', height:'60%', width:'40%', marginLeft:'7.5%', marginRight:'5%', overflow: 'hidden'}}>Up</button>
                         <button value="down" onClick={(e) => keyChange(e)} style={{display:'inline-block', height:'60%', width:'40%', overflow: 'hidden'}}>Down</button>
-                    </div>
-                   
+                    </div> 
                 </div>
                 <div style={{display:'inline-block', verticalAlign: 'top', height:'100%', width:'40%'}}>
                     <p style={{fontWeight: 'bold', color:'white', height:'25%', marginTop:'3%', textAlign:'center'}}>Toggle Effects</p>
                     <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'50%'}}>
-                        <button className={props.reverbButtonClass} onClick={props.toggleReverb}>Reverb</button>
-                    </div>
-                    <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'50%'}}>
-                        <button className={props.delayButtonClass} onClick={props.toggleDelay}>Echo</button>
-                    </div>
-                </div>
-                
-                <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'30%'}}>
-                    <p style={{fontWeight: 'bold',color:'white', height:'10%', marginTop:'3%', textAlign:'center'}}>Echo Division</p>
-                    <div style={{height:'32.5%', width:'100%', marginBottom:'2.5%'}}>
-                        <button value="quarter" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/4</button>
-                        <button value="eighth" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/8</button>
-                    </div>
-                    <div style={{height:'32.5%', width:'100%'}}>
-                        <button value="dotted eighth" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/8<strong>.</strong></button>
-                        <button value="sixteenth" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/16</button>
+                        <button className={props.distButtonClass} onClick={props.toggleDistortion}>Distortion</button>
                     </div>
                 </div>
             </div>
@@ -79,7 +59,7 @@ function LeadControls(props) {
                     Use your keyboard to play notes
                 </div>
                 <div style={{marginTop:'7%', marginLeft:'10%'}}>
-                    <LeadKeyboard tones={props.tones}/>
+                    <BassKeyboard tones={props.tones}/>
                 </div>
                 
             </div>
@@ -87,4 +67,4 @@ function LeadControls(props) {
     )
 }
 
-export default LeadControls
+export default BassControls
