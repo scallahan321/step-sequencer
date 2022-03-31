@@ -24,6 +24,12 @@
   color: #61dafb;
 }
 
+.page-header {
+  color: white;
+  text-align: center;
+  font-family: 'Neon',Fallback, sans-serif;
+ 
+}
 
 .step-button-highlight {
   background-color: blue;
@@ -69,11 +75,12 @@
 
 .step-row {
   display: block;
-  height: 23%;
+  /* height: 23%; */
+  height:21%;
   margin-top: 1%;
   /* margin-left:12%; */
   width: 100%;
-  border: 2px dotted blue;
+  
 }
 
 .step-switch {
@@ -85,6 +92,7 @@
   margin-right: 1.1%;
   margin-top: 2%;
   border: 1.5px solid black;
+  background-color: white;
   /* margin-left: 1.25%; */
 }
 
@@ -101,8 +109,11 @@
 }
 
 .light-off{
-  height: 10%;
-  width: 18%;
+  height: .5rem;
+  width: .5rem;
+  font-size: .3rem;
+  text-align: center;
+  color: #bbb;
   background-color: #bbb;
   border-radius: 50%;
   display: block;
@@ -114,10 +125,13 @@
 }
 
 .light-on {
-  height: 10%;
-  width: 18%;
-  background-color: #bbb;
+  /* height: 10%;
+  width: 18%; */
+  height: .5rem;
+  width: .5rem;
+  
   border-radius: 50%;
+
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -156,6 +170,28 @@
   background-color: black;
 }
 
+.drum-button-off {
+  display: inline-block;
+  text-align: center;
+  margin-left: 8%;
+  margin-top: 2%;
+  height:90%;
+  width:25%;
+  
+}
+
+.drum-button-on {
+  display: inline-block;
+  text-align: center;
+  margin-left: 8%;
+  height:90%;
+  width:25%;
+  color: white;
+  background-color: black;
+}
+
+
+
 .bass-effect-button-off {
   display: inline-block;
   height:40%;
@@ -172,6 +208,39 @@
   background-color: black;
 }
 
+
+.click-screen-message-visible {
+  display: inline-block;
+  margin-left: 1rem;
+  visibility: visible;
+  font-size: .9rem;
+  
+}
+
+.click-screen-message-hidden {
+  display: inline-block;
+  margin-left: 1rem;
+  visibility: hidden;
+  font-size: .9rem;
+}
+
+
+.delay-division-off {
+  background-color: white;
+  color: black;
+  height: 96%;
+  width: 22%; 
+  margin-left: 20%;
+}
+
+.delay-division-on {
+  background-color: black;
+  color: white;
+  height: 96%;
+  width: 22%; 
+  margin-left: 20%;
+}
+
 @font-face {
   font-family: 'Neon';
  
@@ -186,10 +255,26 @@
   font-family: 'Neon',Fallback, sans-serif;
   color: #fff;
   text-shadow:
-  0 0 7px #fff,
-  0 0 10px #fff,
+  0 0 12px #fff,
+  0 0 20px #fff,
   0 0 102px #9d00ff,
   0 0 151px #9d00ff,
-  0 0 100px #66128c;
+  0 0 100px #66128c,
+  0 0 150px #66128c;
 }
 
+.drum-title {
+  display: inline-block;
+  height:90%;
+  padding-top:3%;
+  padding-left:4%;
+  font-family: 'Neon',Fallback, sans-serif;
+  color: #fff;
+  text-shadow:
+  0 0 12px #fff,
+  0 0 20px #fff,
+  0 0 102px #9d00ff,
+  0 0 151px #9d00ff,
+  0 0 100px #66128c,
+  0 0 150px #66128c
+}

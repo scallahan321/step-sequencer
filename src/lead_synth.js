@@ -49,6 +49,7 @@ function LeadSynth(props) {
     //const [delayTempo, setDelayTempo] = useState(300)
     const [reverbOn, setReverbOn] = useState(false)
     const [delayButtonClass, setDelayButtonClass] = useState('effect-button-off')
+    const [divisionButtonClass, setDivisionButtonClass] = useState(['delay-division-off','delay-division-off','delay-division-off','delay-division-off'])
     const [reverbButtonClass, setReverbButtonClass] = useState('effect-button-off')
     const [key, setKey] = useState("c")
     const [keyFormDisabled, setKeyFormDisabled] = useState(false)
@@ -126,6 +127,7 @@ function LeadSynth(props) {
             const notes = createWaves(frequencies, false, delayDivision, reverbOn)
             setTones(notes)
             setDelayButtonClass('effect-button-off')
+            setDivisionButtonClass(['delay-division-off','delay-division-off','delay-division-off','delay-division-off'])
             isOn = false
         }
         setDelayOn(isOn)
@@ -218,6 +220,22 @@ function LeadSynth(props) {
         const notes = createWaves(frequencies, delayOn, division, reverbOn)
         setTones(notes)
         setDelayDivision(division)
+        var division_classes = ['delay-division-off','delay-division-off','delay-division-off','delay-division-off']
+        if (division==="quarter") {
+            division_classes[0] = 'delay-division-on'
+        }
+        else if (division==="eighth") {
+            division_classes[1] = 'delay-division-on'
+        }
+        else if (division==="dotted eighth") {
+            division_classes[2] = 'delay-division-on'
+        }
+        else {
+            division_classes[3] = 'delay-division-on'
+        }
+        setDivisionButtonClass(division_classes)
+
+
 
         //setDelayFormDisabled(true)
         //setDelayDivisionVariant('info')
@@ -290,7 +308,7 @@ function LeadSynth(props) {
             delayButtonClass={delayButtonClass}
             toggleDelay={toggleDelay}
             handleDelayChange={handleDelayChange}
-            delayDivisionVariant={delayDivisionVariant}
+            divisionButtonClass={divisionButtonClass}
             delayDivision={delayDivision}
             reverbButtonClass={reverbButtonClass}
             toggleReverb={toggleReverb}

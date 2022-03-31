@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import {Container, Col, Row} from 'react-bootstrap';
 
@@ -25,10 +25,21 @@ function DrumMachine(props) {
         )
 
 
+    useEffect(() => {
+        if (props.cleared) {
+            setSnareSelected(["light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off"])
+            setKickSelected(["light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off"])
+            setHatSelected(["light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off"])
+            setCymbalSelected(["light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off"])   
+        }
+    }, [props.cleared])
+
+
     function handleClick(e, instrument) {
+        var steps;
         if (instrument==="snare") {
             props.handleSnareClick(e)
-            var steps= [...snareSelected]
+            steps= [...snareSelected]
             const step = e.target.value
             if (steps[step]==="light-off") {
                 steps[step] = "light-on"
@@ -40,7 +51,7 @@ function DrumMachine(props) {
         }
         else if (instrument==="kick") {
             props.handleKickClick(e)
-            var steps= [...kickSelected]
+            steps= [...kickSelected]
             const step = e.target.value
             if (steps[step]==="light-off") {
                 steps[step] = "light-on"
@@ -52,7 +63,7 @@ function DrumMachine(props) {
         }
         else if (instrument==="hat") {
             props.handleHatClick(e)
-            var steps= [...hatSelected]
+            steps= [...hatSelected]
             const step = e.target.value
             if (steps[step]==="light-off") {
                 steps[step] = "light-on"
@@ -64,7 +75,7 @@ function DrumMachine(props) {
         }
         else {
             props.handleCymbalClick(e)
-            var steps= [...cymbalSelected]
+            steps= [...cymbalSelected]
             const step = e.target.value
             if (steps[step]==="light-off") {
                 steps[step] = "light-on"
@@ -80,9 +91,11 @@ function DrumMachine(props) {
     function mapButtons(i, instrument) {
         if (instrument==="snare") {
             return (
-                <div key={snareKeys[i]} className="step-switch">
+                   <div key={snareKeys[i]} className="step-switch">
+                    
                     <button className="step-button"  value={i} onClick={e => handleClick(e, "snare")}></button>
                     <span className={snareSelected[i]}></span>
+                    
                     </div>  
             )     
         }
@@ -115,23 +128,27 @@ function DrumMachine(props) {
 
     return (
         <div style={{height:'100%', width:'100%'}}>
-            <div style={{display: 'inline-block', height: '100%', width:'100%', border:'2px solid green'}}>
-                
+            <div style={{display: 'inline-block', height: '100%', width:'100%'}}>
+
+                <div style={{color:'white',fontWeight: 'bold', fontSize:'.9rem', marginTop:'1%', textAlign:'center'}}>
+                        Click boxes to turn on drum sounds, then hit play to start the step sequencer
+                </div>
+                    
                 <div className="d-flex step-row">
-                    <p style={{display:'inline-block', width:'10%'}}>snare</p>
+                    <p style={{display:'inline-block', width:'10%', marginTop:'3.5%', marginLeft:'1%', color:'white', fontWeight:'bold'}}>snare</p>
                     {index.map((item) => mapButtons(item, "snare"))}
                 </div>
                 <div className="d-flex step-row">
-                    <p style={{display:'inline-block', width:'10%'}}>kick</p>
+                    <p style={{display:'inline-block', width:'10%', marginTop:'3.5%',marginLeft:'1%',  color:'white', fontWeight:'bold'}}>kick</p>
                     {index.map((item) => mapButtons(item, "kick"))}  
                 </div>
 
                 <div className="d-flex step-row">
-                    <p style={{display:'inline-block', width:'10%'}}>hihat</p>
+                    <p style={{display:'inline-block', width:'10%',marginTop:'3.5%',marginLeft:'1%',  color:'white', fontWeight:'bold'}}>hihat</p>
                     {index.map((item) => mapButtons(item, "hat"))}
                 </div>
                 <div className="d-flex step-row">
-                    <p style={{display:'inline-block', width:'10%'}}>crash</p>
+                    <p style={{display:'inline-block', width:'10%',marginTop:'3.5%',marginLeft:'1%',  color:'white', fontWeight:'bold'}}>crash</p>
                     {index.map((item) => mapButtons(item, "cymbal"))}
                 </div>
             </div>

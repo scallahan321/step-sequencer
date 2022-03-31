@@ -54,8 +54,10 @@ function Beat(props) {
     const [hatSteps, setHatSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
     const [cymbalSteps, setCymbalSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
     const [boolArray, setBoolArray] = useState([])
-    //const [reverbOn, setReverbOn] = useState(false)
-    const [buttonVariant, setButtonVariant] = useState(['outline-secondary', 'outline-secondary', 'outline-secondary', 'outline-secondary'])
+    const [playButtonClass, setPlayButtonClass] = useState('drum-button-off')
+    const [stopButtonClass, setStopButtonClass] = useState('drum-button-off')
+    const [cleared, setCleared] = useState(false)
+    
 
     const snareCymbal = new Pizzicato.Group([snare2, cymbal2])
     const snareKick = new Pizzicato.Group([snare3, kick2])
@@ -131,6 +133,9 @@ function Beat(props) {
 
 
     function handleSnareClick(e) {
+        if (cleared) {
+            setCleared(false)
+        }
         const step = e.target.value
         const snares = [...snareSteps]
         if (snares[step]) {
@@ -148,6 +153,9 @@ function Beat(props) {
     }
 
     function handleKickClick(e) {
+        if (cleared) {
+            setCleared(false)
+        }
         const step = e.target.value
         const kicks = [...kickSteps]
         if (kicks[step]) {
@@ -166,6 +174,9 @@ function Beat(props) {
     }
 
     function handleHatClick(e) {
+        if (cleared) {
+            setCleared(false)
+        }
         const step = e.target.value
         const hats = [...hatSteps]
         if (hats[step]) {
@@ -200,19 +211,29 @@ function Beat(props) {
 
     function play() {
         setIsRunning(true)
-        var variants = [...buttonVariant]
-        variants[0] = "secondary"
-        variants[1] = "outline-secondary"
-        setButtonVariant(variants)
+        var current_class = playButtonClass
+        if (current_class==="drum-button-off") {
+            current_class = "drum-button-on"
+            setStopButtonClass("drum-button-off")
+        }
+        else {
+            current_class = "drum-button-off"
+        }
+        setPlayButtonClass(current_class)
     }
 
     function stop() {
         setIsRunning(false);
         setCount(0)
-        var variants = [...buttonVariant]
-        variants[0] = "outline-secondary"
-        variants[1] = "secondary"
-        setButtonVariant(variants)
+        var current_class = stopButtonClass
+        if (current_class==="drum-button-off") {
+            current_class = "drum-button-on"
+            setPlayButtonClass("drum-button-off")
+        }
+        else {
+            current_class = "drum-button-off"
+        }
+        setStopButtonClass(current_class)
     }
 
 
@@ -222,100 +243,30 @@ function Beat(props) {
         setHatSteps([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
         setCymbalSteps([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
         setBoolArray([])
+        setCleared(true)
     }
 
     
 
   return (
     <div style={{height:'100%', width:'100%'}}>
-      <div style={{height:'10%', width:'30%', marginLeft:'35%'}}>
-        <Button variant={buttonVariant[0]} size= "lg" onClick={play}>play</Button>
-        <Button variant={buttonVariant[1]} size= "lg"  onClick={stop}>stop</Button>
-        <Button variant={buttonVariant[2]} size= "lg"  onClick={clear}>clear</Button>
+        <div style={{display:'block', height:'14%', width:'100%', paddingBottom:'3%', borderBottom:'1px solid white'}}>
+            <div style={{display:'inline-block', height:'100%', width:'30%'}}>
+                <h2 className="drum-title">Drum Machine</h2>
+            </div>
+            <div style={{display:'inline-block', height:'100%', width:'50%', marginLeft:'15%'}}>
+                <button className={playButtonClass} onClick={play}>play</button>
+                <button className={stopButtonClass} onClick={stop}>stop</button>
+                <button className= "drum-button-off" onClick={clear}>clear</button>
+            </div>
+
         </div>
 
-       
-     
-      {/* <div id = "snare">
-        <p style={{display:'block'}}>snare</p>
-        <Button variant={setStepButtonVariant(snareSteps[0])} value='0' onClick={ e => handleSnareClick(e)}> 1</Button>
-        <Button variant={setStepButtonVariant(snareSteps[1])} value='1'  onClick={ e => handleSnareClick(e)}> 2 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[2])} value='2' onClick={ e => handleSnareClick(e)}> 3 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[3])} value='3' onClick={ e => handleSnareClick(e)}> 4 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[4])} value='4' onClick={ e => handleSnareClick(e)}> 5 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[5])} value= '5' onClick={ e => handleSnareClick(e)}> 6</Button>
-        <Button variant={setStepButtonVariant(snareSteps[6])} value='6'  onClick={ e => handleSnareClick(e)}> 7 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[7])} value='7' onClick={ e => handleSnareClick(e)}> 8 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[8])} value='8' onClick={ e => handleSnareClick(e)}> 9 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[9])} value='9' onClick={ e => handleSnareClick(e)}> 10 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[10])} value= '10' onClick={ e => handleSnareClick(e)}> 11 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[11])} value='11'  onClick={ e => handleSnareClick(e)}> 12 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[12])} value='12' onClick={ e => handleSnareClick(e)}> 13 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[13])} value='13' onClick={ e => handleSnareClick(e)}> 14 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[14])} value='14' onClick={ e => handleSnareClick(e)}> 15 </Button>
-        <Button variant={setStepButtonVariant(snareSteps[15])} value='15' onClick={ e => handleSnareClick(e)}> 16 </Button>
-      </div>
-      <div id = "kick">
-        <p style={{display:'block'}}>kick</p>
-        <Button variant={setStepButtonVariant(kickSteps[0])} value='0' onClick={ e => handleKickClick(e)}> 1 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[1])} value='1' onClick={ e => handleKickClick(e)}> 2 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[2])} value='2' onClick={ e => handleKickClick(e)}> 3 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[3])} value='3' onClick={ e => handleKickClick(e)}> 4 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[4])} value='4' onClick={ e => handleKickClick(e)}> 5 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[5])} value='5' onClick={ e => handleKickClick(e)}> 6 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[6])} value='6' onClick={ e => handleKickClick(e)}> 7 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[7])} value='7' onClick={ e => handleKickClick(e)}> 8 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[8])} value='8' onClick={ e => handleKickClick(e)}> 9 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[9])} value='9' onClick={ e => handleKickClick(e)}> 10 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[10])} value='10' onClick={ e => handleKickClick(e)}> 11 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[11])} value='11' onClick={ e => handleKickClick(e)}> 12 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[12])} value='12' onClick={ e => handleKickClick(e)}> 13 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[13])} value='13' onClick={ e => handleKickClick(e)}> 14 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[14])} value='14' onClick={ e => handleKickClick(e)}> 15 </Button>
-        <Button variant={setStepButtonVariant(kickSteps[15])} value='15' onClick={ e => handleKickClick(e)}> 16 </Button>
-      </div>
-      <div id="hat">
-        <p style={{display:'block'}}>hat</p>
-        <Button variant={setStepButtonVariant(hatSteps[0])} value='0' onClick={ e => handleHatClick(e)}> 1 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[1])} value='1' onClick={ e => handleHatClick(e)}> 2 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[2])} value='2' onClick={ e => handleHatClick(e)}> 3 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[3])} value='3' onClick={ e => handleHatClick(e)}> 4 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[4])} value='4' onClick={ e => handleHatClick(e)}> 5 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[5])} value='5' onClick={ e => handleHatClick(e)}> 6 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[6])} value='6' onClick={ e => handleHatClick(e)}> 7 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[7])} value='7' onClick={ e => handleHatClick(e)}> 8 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[8])} value='8' onClick={ e => handleHatClick(e)}> 9 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[9])} value='9' onClick={ e => handleHatClick(e)}> 10 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[10])} value='10' onClick={ e => handleHatClick(e)}> 11 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[11])} value='11' onClick={ e => handleHatClick(e)}> 12 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[12])} value='12' onClick={ e => handleHatClick(e)}> 13 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[13])} value='13' onClick={ e => handleHatClick(e)}> 14 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[14])} value='14' onClick={ e => handleHatClick(e)}> 15 </Button>
-        <Button variant={setStepButtonVariant(hatSteps[15])} value='15' onClick={ e => handleHatClick(e)}> 16 </Button>
-      </div>
-      <div id="cymbal">
-        <p style={{display:'block'}}>cymbal</p>
-        <Button variant={setStepButtonVariant(cymbalSteps[0])} value='0' onClick={ e => handleCymbalClick(e)}> 1 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[1])} value='1' onClick={ e => handleCymbalClick(e)}> 2 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[2])} value='2' onClick={ e => handleCymbalClick(e)}> 3 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[3])} value='3' onClick={ e => handleCymbalClick(e)}> 4 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[4])} value='4' onClick={ e => handleCymbalClick(e)}> 5 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[5])} value='5' onClick={ e => handleCymbalClick(e)}> 6 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[6])} value='6' onClick={ e => handleCymbalClick(e)}> 7 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[7])} value='7' onClick={ e => handleCymbalClick(e)}> 8 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[8])} value='8' onClick={ e => handleCymbalClick(e)}> 9 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[9])} value='9' onClick={ e => handleCymbalClick(e)}> 10 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[10])} value='10' onClick={ e => handleCymbalClick(e)}> 11 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[11])} value='11' onClick={ e => handleCymbalClick(e)}> 12 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[12])} value='12' onClick={ e => handleCymbalClick(e)}> 13 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[13])} value='13' onClick={ e => handleCymbalClick(e)}> 14 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[14])} value='14' onClick={ e => handleCymbalClick(e)}> 15 </Button>
-        <Button variant={setStepButtonVariant(cymbalSteps[15])} value='15' onClick={ e => handleCymbalClick(e)}> 16 </Button>
-      </div>
-       */}
-       <div style={{height:'90%'}}>
+
+        
+
+       <div style={{height:'86%', paddingTop:'1%'}}>
        <DrumMachine 
-        setStepButtonVariant={setStepButtonVariant}
         snareSteps={snareSteps}
         handleSnareClick={handleSnareClick}  
         kickSteps={kickSteps}
@@ -324,6 +275,7 @@ function Beat(props) {
         handleHatClick={handleHatClick}
         cymbalSteps={cymbalSteps}
         handleCymbalClick={handleCymbalClick}
+        cleared={cleared}
         />
        </div>
        

@@ -64,13 +64,13 @@ function LeadControls(props) {
                 
                 <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'30%'}}>
                     <p style={{fontWeight: 'bold',color:'white', height:'10%', marginTop:'3%', textAlign:'center'}}>Echo Division</p>
-                    <div style={{height:'32.5%', width:'100%', marginBottom:'2.5%'}}>
-                        <button value="quarter" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/4</button>
-                        <button value="eighth" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/8</button>
+                    <div style={{height:'32.5%', width:'100%', marginBottom:'2.5%', fontSize:'.8rem'}}>
+                        <button className={props.divisionButtonClass[0]} value="quarter" onClick={e => props.handleDelayChange(e)} style={{height:'96%',width:'22%', marginLeft:'20%'}}>1/4</button>
+                        <button className={props.divisionButtonClass[1]} value="eighth" onClick={e => props.handleDelayChange(e)} style={{height:'96%',width:'22%', marginLeft:'12%'}}>1/8</button>
                     </div>
-                    <div style={{height:'32.5%', width:'100%'}}>
-                        <button value="dotted eighth" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/8<strong>.</strong></button>
-                        <button value="sixteenth" onClick={e => props.handleDelayChange(e)} style={{height:'95%',width:'25%', marginLeft:'15%'}}>1/16</button>
+                    <div style={{height:'32.5%', width:'100%', fontSize:'.8rem'}}>
+                        <button className={props.divisionButtonClass[2]} value="dotted eighth" onClick={e => props.handleDelayChange(e)} style={{height:'96%',width:'22%', marginLeft:'20%'}}>1/8<strong>.</strong></button>
+                        <button className={props.divisionButtonClass[3]} value="sixteenth" onClick={e => props.handleDelayChange(e)} style={{height:'96%',width:'22%', marginLeft:'12%'}}>1/16</button>
                     </div>
                 </div>
             </div>
