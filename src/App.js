@@ -44,7 +44,7 @@ function App() {
     <Container fluid className='vh-100 container-main' style={{border: '3px solid blue', backgroundColor:'black'}}>
       <Row style={{height:'10%', paddingTop:'1%'}}>
         <Col lg={12} md={12} sm={12}>
-          <h4 className="page-header">Retro Beats by Sean</h4>
+          <h4 className="page-header">React Drums and Synth</h4>
        
         </Col>
       </Row>
