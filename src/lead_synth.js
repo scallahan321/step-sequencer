@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form'
 import LeadControls from './lead_controls';
 
 
-//delay button
+// interval
 
 function LeadSynth(props) {
 
@@ -237,20 +237,9 @@ function LeadSynth(props) {
 
 
 
-        //setDelayFormDisabled(true)
-        //setDelayDivisionVariant('info')
     }
 
-    // function handleDelaySubmit() {
-    //     //const val = e.target.value
-    //     for (const tone of tones) {
-    //         tone.stop()
-    //     }
-    //     const notes = createWaves(frequencies, delayOn, delayDivision, reverbOn)
-    //     setTones(notes)
-    //     setDelayFormDisabled(false)
-    //     setDelayDivisionVariant('outline-secondary')  
-    // }
+   
 
     function setScaleFreq(key) {
         //const key = e.target.value
