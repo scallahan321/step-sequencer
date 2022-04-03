@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 
 import BassControls from './bass_controls';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
-
+import useInterval from './use_interval';
 
 function BassSynth() {
 
@@ -47,20 +47,12 @@ function BassSynth() {
         "a_flat": Math.pow(semitone_down, 4),
     }
 
-    const dropdownValues = [
-        {'label': 'C Major', 'value': 'c' },
-        {'label': 'C# Major', 'value': 'c_sharp' },
-        {'label': 'D Major', 'value': 'd' },
-        {'label': 'Eb Major', 'value': 'e_flat' },
-        {'label': 'E Major', 'value': 'e' },
-        {'label': 'F Major', 'value': 'f' },
-        {'label': 'F# Major', 'value': 'f_sharp' },
-        {'label': 'G Major', 'value': 'g' },
-        {'label': 'B Major', 'value': 'b' },
-        {'label': 'Bb Major', 'value': 'b_flat' },
-        {'label': 'A Major', 'value': 'a' },
-        {'label': 'Ab Major', 'value': 'a_flat' }
-    ]
+  
+    useInterval(() => {
+        for (const tone of tones) {
+            tone.stop()
+        }      
+    }, 5000);
 
     var distortion = new Pizzicato.Effects.Distortion({
     gain: 0.4

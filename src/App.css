@@ -26,7 +26,7 @@
 
 .page-header {
   color: white;
-  text-align: center;
+  text-align: right;
   font-family:sans-serif;
  
 }
@@ -37,6 +37,40 @@
 
 .step-button-plain {
   background-color: white;
+}
+
+.mute-button {
+  display: inline-block;
+  height: 70%;
+  width: 30%;
+  margin-right: 5%;
+  margin-top: 2%;
+  
+  background-color: white;
+}
+
+.mute-button-clicked {
+  display: inline-block;
+  height: 70%;
+  width: 30%;
+  margin-right: 5%;
+  margin-top:2%;
+  
+  background-color: red;
+}
+
+.mute-message-hidden {
+  display:inline-block;
+  width:50%;
+  color: white;
+  visibility: hidden;
+}
+
+.mute-message-visible {
+  display:inline-block;
+  width: 50%;
+  color: white;
+  visibility: visible;
 }
 
 .keyboard-key {
@@ -76,12 +110,15 @@
 .step-row {
   display: block;
   /* height: 23%; */
-  height:21%;
+  /* height:21%; */
+
+  height: 19%;
+
   margin-top: 1%;
   /* margin-left:12%; */
   width: 100%;
-  
 }
+
 
 .step-switch {
   /* display: inline-block; */
@@ -106,6 +143,19 @@
   border-left: none;
   border-right: none;
   border-bottom: 1px solid black;
+}
+
+.step-button-highlighted {
+  display: block;
+  height: 70%;
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid black;
+  background-color: black;
 }
 
 .light-off{
@@ -158,14 +208,14 @@
   display: inline-block;
   height:40%;
   width:65%;
-  margin-left: 1rem; 
+  margin-left: 1.3rem; 
 }
 
 .effect-button-on {
   display: inline-block;
   height:40%;
   width:65%;
-  margin-left: 1rem;
+  margin-left: 1.3rem;
   color: white;
   background-color: black;
 }
@@ -249,6 +299,7 @@
 }
 
 .synth-title {
+  display: inline-block;
   height:12%;
   padding-top:2%;
   padding-left:3%;

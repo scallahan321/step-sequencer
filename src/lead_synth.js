@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import LeadKeyboard from './lead_keyboard';
 import Form from 'react-bootstrap/Form'
 import LeadControls from './lead_controls';
+import useInterval from './use_interval';
 
 
 // interval
@@ -52,14 +53,9 @@ function LeadSynth(props) {
     const [divisionButtonClass, setDivisionButtonClass] = useState(['delay-division-off','delay-division-off','delay-division-off','delay-division-off'])
     const [reverbButtonClass, setReverbButtonClass] = useState('effect-button-off')
     const [key, setKey] = useState("c")
-    const [keyFormDisabled, setKeyFormDisabled] = useState(false)
-    const [keySubmitButtonVariant, setKeySubmitButtonVariant] = useState('outline-secondary')
-    const [delayDivisionVariant, setDelayDivisionVariant] = useState('outline-secondary')
-    const [delayFormDisabled, setDelayFormDisabled] = useState(false)
+    const [count, setCount] = useState(0)
+
  
-
-    
-
     const multipliers = {
         "c": 1,
         "c_sharp": semitone_up,
@@ -75,20 +71,6 @@ function LeadSynth(props) {
         "a_flat": Math.pow(semitone_down, 4),
     }
 
-    const dropdownValues = [
-        {'label': 'C Major', 'value': 'c' },
-        {'label': 'C# Major', 'value': 'c_sharp' },
-        {'label': 'D Major', 'value': 'd' },
-        {'label': 'Eb Major', 'value': 'e_flat' },
-        {'label': 'E Major', 'value': 'e' },
-        {'label': 'F Major', 'value': 'f' },
-        {'label': 'F# Major', 'value': 'f_sharp' },
-        {'label': 'G Major', 'value': 'g' },
-        {'label': 'B Major', 'value': 'b' },
-        {'label': 'Bb Major', 'value': 'b_flat' },
-        {'label': 'A Major', 'value': 'a' },
-        {'label': 'Ab Major', 'value': 'a_flat' }
-    ]
 
     var lowPassFilter = new Pizzicato.Effects.LowPassFilter({
         frequency: 500,
@@ -110,6 +92,13 @@ function LeadSynth(props) {
         reverse: false,
         mix: 0.4
     });
+
+
+    useInterval(() => {
+        for (const tone of tones) {
+            tone.stop()
+        }      
+    }, 5000);
 
    
     function toggleDelay() {

@@ -3,19 +3,27 @@ import './App.css';
 import Beat from './beat';
 import BassSynth from './bass_synth';
 import LeadSynth from './lead_synth';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import {Container, Col, Row} from 'react-bootstrap';
+import Pizzicato from 'pizzicato';
 
 
 function App() {
-
+ 
   const [showLeadSynth, setShowLeadSynth] = useState(true)
-  const [buttonVariant, setButtonVariant] = useState(['dark', 'outline-dark'])
   const [tempo, setTempo] = useState(100)
   const [interval, setInterval] = useState(300)
-  const [clickMessage, setClickMessage] = useState('click-screen-message-hidden')
+  const [muteButtonClass, setMuteButtonClass] = useState('mute-button')
+  const [muteMessageClass, setMuteMessageClass] = useState('mute-message-hidden')
+  const [muteButtonText, setMuteButtonText] = useState('Mute All Sounds')
+  
+  //Pizzicato.volume = 0.5
 
+  function killSound() {
+    Pizzicato.volume = 0
+    setMuteButtonClass('mute-button-clicked')
+    setMuteMessageClass('mute-message-visible')
+    setMuteButtonText('Sound Muted')
+  }
 
   function handleSliderChange(e) {
     const val = e.target.value
@@ -23,70 +31,44 @@ function App() {
     setInterval(30000/val)
   }
 
-  function handleChange() {
+  function handleClick() {
     setShowLeadSynth(!showLeadSynth)
-    setClickMessage('click-screen-message-visible')
+    //setClickMessage('click-screen-message-visible')
   }
 
-  function handleClick(e) {
-    const val = e.target.value
-    if (val==="lead") {
-      setButtonVariant(['outline-dark', 'dark'])
-      setShowLeadSynth(true)
-    }
-    else {
-      setButtonVariant(['dark', 'outline-dark'])
-      setShowLeadSynth(false)
-    }
-  }
 
   return (
     <Container fluid className='vh-100 container-main' style={{border: '3px solid blue', backgroundColor:'black'}}>
-      <Row style={{height:'10%', paddingTop:'1%'}}>
-        <Col lg={12} md={12} sm={12}>
-          <h4 className="page-header">React Drums and Synth</h4>
-       
-        </Col>
-      </Row>
-
-      <Row style={{height:'15%', borderTop: '2px solid white', color:'white'}}>
-        <Col lg={6} md={6} sm={6}>
-          
-          <p style={{display:'inline-block', marginTop:'3rem'}}>Set Tempo:&nbsp;</p>
-          <input style={{width: '45%', display:'inline-block', marginLeft:'1rem', marginRight:'1rem', paddingTop:'.75rem'}} onChange={(e) => handleSliderChange(e)} type="range" className="custom-range"  min="50" max="170" step="1" defaultValue={100} id="tempoRange"></input> 
-          <p style={{display:'inline-block', marginTop:'3rem'}}>&nbsp;{tempo}</p>
-          
-        </Col>
-        <Col lg={6} md={6} sm={6}>
-            <div style={{height:'50%', marginTop:'3rem', marginLeft:'8rem'}}>
-              <p style={{display:'inline-block', marginRight:'1rem'}}>Toggle Synth:</p>
-              <p style={{display:'inline-block'}}>Lead</p>
-              
-              <div class="custom-control custom-switch" style={{display:'inline-block', marginLeft:'.75rem'}} >
-                <input type="checkbox" style={{display:'inline-block'}} class="custom-control-input" id="customSwitch1" onChange={handleChange}></input>
-                <label class="custom-control-label" style={{display:'inline-block'}} for="customSwitch1">Bass</label>
-              </div> 
-              <p className={clickMessage}>Click anywhere on screen to register change</p>
-              </div>
-
+      <Row style={{height:'10%', paddingTop:'0.5rem'}}>
+        <Col style={{height:'100%', width:'100%'}} lg={4} md={4} sm={12}>
+            <button className={muteButtonClass} onClick={killSound}>{muteButtonText}</button>
+            <p className={muteMessageClass}>Refresh browser to resume</p>
            
-          
+        </Col>  
+        <Col lg={8} md={8} sm={12}>
+          <h4 className="page-header">React Step Sequencer and Synth</h4>
+          <p style={{color:'white', textAlign:'right'}}>Made by Sean Callahan</p>
         </Col>
+        
 
       </Row>
-      <Row style={{height:'70%', marginTop:'1%'}}>
-        {/* <Col lg={1} md={1} sm={1} style={{height:'100%',border: '2px solid blue'}}>
-          <div style={{height:'10%'}}></div>
-          <div style={{display:'block',height:'90%', border:'2px solid green'}}>
-            <div style={{display:'block', height:'23%',width:'100%', marginTop:'10%', border:'2px dotted grey'}}><p style={{height:'60%'}}>snare</p></div>
-            <div style={{display:'block', height:'23%',width:'100%',marginTop:'10%', border:'2px dotted grey'}}><p style={{height:'60%'}}>kick</p></div>
-            <div style={{display:'block', height:'23%',width:'100%',marginTop:'10%', border:'2px dotted grey'}}><p style={{height:'60%'}}>hi hat</p></div>
-            <div style={{display:'block', height:'23%',width:'100%',marginTop:'10%', border:'2px dotted grey'}}><p style={{height:'60%'}}>cymbal</p></div>
+
+      <Row style={{height:'12%', color:'white'}}>
+        <Col style={{height:'100%', width:'100%'}} lg={7} md={7} sm={12}>
+          <div style={{display:'block', height:'100%', width:'48%', marginLeft:'.5rem'}}>
+            <p style={{display:'inline-block', marginTop:'1rem'}}>Set Tempo:&nbsp;</p>
+            <input style={{width: '60%', display:'inline-block', marginLeft:'1rem', marginRight:'1rem', paddingTop:'.75rem'}} onChange={(e) => handleSliderChange(e)} type="range" className="custom-range"  min="50" max="170" step="1" defaultValue={100} id="tempoRange"></input> 
+            <p style={{display:'inline-block', marginTop:'3rem'}}>&nbsp;{tempo}</p>
           </div>
-            
-        </Col> */}
+         
+        </Col>
+   
+
+      </Row>
+      <Row style={{height:'75%', marginTop:'1%'}}>
+       
         <Col lg={7} md={7} sm={12} >
-          <div className="bg-dark" style={{height:'95%', marginBottom:'1%'}}>
+          <div className="bg-dark" style={{height:'95%', marginBottom:'1%', borderRadius:'3px', border:'.5px solid #919599'}}>
           
             <Beat interval={interval}/>
           </div>
@@ -96,18 +78,20 @@ function App() {
           
         
 
-          <div className="bg-dark" style={{height:'95%', marginBottom:'1%',  borderRadius:'7px'}}>
+          <div className="bg-dark" style={{height:'95%', marginBottom:'1%', borderRadius:'3px', border:'.5px solid #919599'}}>
             {showLeadSynth ? 
               <div style={{height:'100%'}}>
               <h2 className="synth-title bg-dark">Lead Synth</h2>
+              <div style={{marginLeft:'16rem', display:'inline-block'}}><button onClick={handleClick}>Toggle Synth</button></div>
               <div className='bg-dark' style={{height: '70%'}}>
-             <LeadSynth interval={interval}/>
+             <LeadSynth interval={interval} handleClick={handleClick}/>
              </div>
              </div> :
              <div style={{height:'100%'}}>
               <h2 className="synth-title bg-dark">Bass Synth</h2>
+              <div style={{marginLeft:'16rem', display:'inline-block'}}><button onClick={handleClick}>Toggle Synth</button></div>
               <div className='bg-dark' style={{height: '70%'}}>
-             <BassSynth interval={interval}/>
+             <BassSynth interval={interval} handleClick={handleClick}/>
              </div>
              </div>
           }

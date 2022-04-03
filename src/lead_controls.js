@@ -54,10 +54,10 @@ function LeadControls(props) {
                 </div>
                 <div style={{display:'inline-block', verticalAlign: 'top', height:'100%', width:'40%'}}>
                     <p style={{fontWeight: 'bold', color:'white', height:'25%', marginTop:'3%', textAlign:'center'}}>Toggle Effects</p>
-                    <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'50%'}}>
+                    <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'48%'}}>
                         <button className={props.reverbButtonClass} onClick={props.toggleReverb}>Reverb</button>
                     </div>
-                    <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'50%'}}>
+                    <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'48%'}}>
                         <button className={props.delayButtonClass} onClick={props.toggleDelay}>Echo</button>
                     </div>
                 </div>

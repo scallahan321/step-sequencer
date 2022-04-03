@@ -9,6 +9,7 @@ function DrumMachine(props) {
     const kickKeys = [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     const hatKeys = [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]
     const cymbalKeys = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+    
    
     
     const [snareSelected, setSnareSelected] = useState(
@@ -23,6 +24,8 @@ function DrumMachine(props) {
     const [cymbalSelected, setCymbalSelected] = useState(
         ["light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off", "light-off"]
         )
+
+
 
 
     useEffect(() => {
@@ -93,7 +96,7 @@ function DrumMachine(props) {
             return (
                    <div key={snareKeys[i]} className="step-switch">
                     
-                    <button className="step-button"  value={i} onClick={e => handleClick(e, "snare")}></button>
+                    <button className={props.stepClass[i]}  value={i} onClick={e => handleClick(e, "snare")}></button>
                     <span className={snareSelected[i]}></span>
                     
                     </div>  
@@ -102,7 +105,7 @@ function DrumMachine(props) {
         else if (instrument==="kick") {
             return (
                 <div key={kickKeys[i]} className="step-switch">
-                    <button className="step-button" value={i} onClick={e => handleClick(e, "kick")}></button>
+                    <button className={props.stepClass[i]} value={i} onClick={e => handleClick(e, "kick")}></button>
                     <span className={kickSelected[i]}></span>
                     </div>  
             )    
@@ -110,7 +113,7 @@ function DrumMachine(props) {
         else if (instrument==="hat") {
             return (
                 <div key={hatKeys[i]} className="step-switch">
-                    <button className="step-button" value={i} onClick={e => handleClick(e, "hat")}></button>
+                    <button className={props.stepClass[i]} value={i} onClick={e => handleClick(e, "hat")}></button>
                     <span className={hatSelected[i]}></span>
                     </div>  
             )    
@@ -118,7 +121,7 @@ function DrumMachine(props) {
         else {
             return (
                 <div key={cymbalKeys[i]} className="step-switch">
-                    <button className="step-button" value={i} onClick={e => handleClick(e, "cymbal")}></button>
+                    <button className={props.stepClass[i]} value={i} onClick={e => handleClick(e, "cymbal")}></button>
                     <span className={cymbalSelected[i]}></span>
                     </div>  
             )    
@@ -131,7 +134,7 @@ function DrumMachine(props) {
             <div style={{display: 'inline-block', height: '100%', width:'100%'}}>
 
                 <div style={{color:'white',fontWeight: 'bold', fontSize:'.9rem', marginTop:'1%', textAlign:'center'}}>
-                        Click boxes to turn on drum sounds, then hit play to start the step sequencer
+                        Click boxes to turn drum sounds on and off, then hit play to start play the beat
                 </div>
                     
                 <div className="d-flex step-row">

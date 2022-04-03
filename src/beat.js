@@ -12,6 +12,18 @@ import DrumMachine from './drum_machine.js'
 
 function Beat(props) {
 
+   
+    const [isRunning, setIsRunning] = useState(false);
+    const [count, setCount] = useState(0)
+    const [snareSteps, setSnareSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+    const [kickSteps, setKickSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+    const [hatSteps, setHatSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+    const [cymbalSteps, setCymbalSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
+    const [boolArray, setBoolArray] = useState([])
+    const [playButtonClass, setPlayButtonClass] = useState('drum-button-off')
+    const [stopButtonClass, setStopButtonClass] = useState('drum-button-off')
+    const [cleared, setCleared] = useState(false)
+
     const snare1 = new Pizzicato.Sound(snare)
     const snare2 = new Pizzicato.Sound(snare)
     const snare3 = new Pizzicato.Sound(snare)
@@ -45,20 +57,6 @@ function Beat(props) {
     const cymbal7 = new Pizzicato.Sound(crash)
     const cymbal8 = new Pizzicato.Sound(crash)
 
-    //const [tempo, setTempo] = useState(props.tempo)
-    //const [interval, setInterval] = useState((props.interval))
-    const [isRunning, setIsRunning] = useState(false);
-    const [count, setCount] = useState(0)
-    const [snareSteps, setSnareSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
-    const [kickSteps, setKickSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
-    const [hatSteps, setHatSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
-    const [cymbalSteps, setCymbalSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
-    const [boolArray, setBoolArray] = useState([])
-    const [playButtonClass, setPlayButtonClass] = useState('drum-button-off')
-    const [stopButtonClass, setStopButtonClass] = useState('drum-button-off')
-    const [cleared, setCleared] = useState(false)
-    
-
     const snareCymbal = new Pizzicato.Group([snare2, cymbal2])
     const snareKick = new Pizzicato.Group([snare3, kick2])
     const snareHat = new Pizzicato.Group([snare4, hat2])
@@ -70,6 +68,10 @@ function Beat(props) {
     const kickHatCymbal = new Pizzicato.Group([kick7, hat6, cymbal6])
     const hatCymbal = new Pizzicato.Group([hat7, cymbal7])
     const kickHatSnareCymbal = new Pizzicato.Group([kick8, hat8, snare8, cymbal8])
+
+    const [stepClass, setStepClass] = useState([
+        'step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button',
+        'step-button','step-button', 'step-button', 'step-button', 'step-button', 'step-button'])
 
 
  
@@ -102,32 +104,32 @@ function Beat(props) {
       ]);
    
 
-    function setStepButtonVariant(step) {
-        var variant = step ? 'primary' : 'outline-primary';
-        return variant
-    }
-
     var distortion = new Pizzicato.Effects.Distortion({
         gain: 0.3
     });
 
     useInterval(() => {
+        var step_class = [...stepClass]
+        if (count % 2 ===0) {
+            step_class[count] = 'step-button-highlighted'
+            setStepClass(step_class)
+        }
         const current = boolArray[count]
         if (current!=="false,false,false,false") {
             const sound = groups.get(current)
-            //if (reverbOn) {
-            //    sound.addEffect(reverb)
-            //}
             sound.addEffect(distortion)
             sound.play();
         }
-     
+
         if (count===15) {
             setCount(0)
         }
         else {
             setCount(count+1)
         }
+
+        step_class[count] = 'step-button'
+        setStepClass(step_class)
         
     }, isRunning ? props.interval : null);
 
@@ -250,7 +252,7 @@ function Beat(props) {
 
   return (
     <div style={{height:'100%', width:'100%'}}>
-        <div style={{display:'block', height:'14%', width:'100%', paddingBottom:'3%', borderBottom:'1px solid white'}}>
+        <div style={{display:'block', height:'14%', width:'100%', paddingBottom:'3%', paddingTop:'1%', borderBottom:'1px solid white'}}>
             <div style={{display:'inline-block', height:'100%', width:'30%'}}>
                 <h2 className="drum-title">Drum Machine</h2>
             </div>
@@ -276,6 +278,7 @@ function Beat(props) {
         cymbalSteps={cymbalSteps}
         handleCymbalClick={handleCymbalClick}
         cleared={cleared}
+        stepClass={stepClass}
         />
        </div>
        
