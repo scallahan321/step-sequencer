@@ -1,14 +1,10 @@
 import './App.css';
 import React, { useState } from 'react';
-
 import LeadKeyboard from './lead_keyboard';
 
 
-
 function LeadControls(props) {
-
     const keys = ['a_flat', 'a', 'b_flat', 'b', 'c', 'c_sharp', 'd', 'e_flat', 'e', 'f', 'f_sharp', 'g']
-    const keyLabels = ['Ab', 'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G']
     // currentKey will work as an index of keys. starting at 4 for C
     const [currentKey, setCurrentKey] = useState(4)
 
@@ -49,8 +45,7 @@ function LeadControls(props) {
                     <div style={{height: '70%', marginBottom:'5rem'}}>
                         <button value="up" onClick={(e) => keyChange(e)} style={{display:'inline-block', height:'60%', width:'40%', marginLeft:'7.5%', marginRight:'5%', overflow: 'hidden'}}>Up</button>
                         <button value="down" onClick={(e) => keyChange(e)} style={{display:'inline-block', height:'60%', width:'40%', overflow: 'hidden'}}>Down</button>
-                    </div>
-                   
+                    </div>     
                 </div>
                 <div style={{display:'inline-block', verticalAlign: 'top', height:'100%', width:'40%'}}>
                     <p style={{fontWeight: 'bold', color:'white', height:'25%', marginTop:'3%', textAlign:'center'}}>Toggle Effects</p>
@@ -61,7 +56,6 @@ function LeadControls(props) {
                         <button className={props.delayButtonClass} onClick={props.toggleDelay}>Echo</button>
                     </div>
                 </div>
-                
                 <div style={{display: 'inline-block', verticalAlign: 'top', height:'100%', width:'30%'}}>
                     <p style={{fontWeight: 'bold',color:'white', height:'10%', marginTop:'3%', textAlign:'center'}}>Echo Division</p>
                     <div style={{height:'32.5%', width:'100%', marginBottom:'2.5%', fontSize:'.8rem'}}>
@@ -80,8 +74,7 @@ function LeadControls(props) {
                 </div>
                 <div style={{marginTop:'7%', marginLeft:'10%'}}>
                     <LeadKeyboard tones={props.tones}/>
-                </div>
-                
+                </div>  
             </div>
         </div>
     )

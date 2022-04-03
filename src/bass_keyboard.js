@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
-import Button from 'react-bootstrap/Button';
 
 function BassKeyboard(props) {
-
     const [pressed, setPressed] = useState(false)
-
-    const [lastPlayed, setLastPlayed] = useState(null)
 
     function keyClass(key) {
         if (isHotkeyPressed(key) && pressed) {
@@ -24,9 +20,7 @@ function BassKeyboard(props) {
             }
         });
         setPressed(true)
-        props.tones[tone].play()
-        //setLastPlayed(tone)
-        
+        props.tones[tone].play()       
     }
 
     function releaseKey(tone) {
@@ -53,8 +47,6 @@ function BassKeyboard(props) {
 
 
     return (
-        <div>
-         
           <div>
             <div className = {keyClass("z")}> <p className="key-label">z</p> </div>
             <div className = {keyClass("x")}> <p className="key-label">x</p> </div>
@@ -65,8 +57,6 @@ function BassKeyboard(props) {
             <div className = {keyClass("m")}> <p className="key-label">m</p> </div>
             <div className = {keyClass(",")}> <p className="key-label">,</p> </div>
           </div>
-       
-        </div>
     )
 }
 export default BassKeyboard

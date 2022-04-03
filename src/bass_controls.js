@@ -3,10 +3,7 @@ import React, { useState } from 'react';
 import BassKeyboard from "./bass_keyboard"
 
 function BassControls(props) {
-
     const keys = ['a_flat', 'a', 'b_flat', 'b', 'c', 'c_sharp', 'd', 'e_flat', 'e', 'f', 'f_sharp', 'g']
-    const keyLabels = ['Ab', 'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G']
-    // currentKey will work as an index of keys. starting at 4 for C
     const [currentKey, setCurrentKey] = useState(4)
 
     function keyChange(e) {
@@ -61,7 +58,6 @@ function BassControls(props) {
                 <div style={{marginTop:'7%', marginLeft:'10%'}}>
                     <BassKeyboard tones={props.tones}/>
                 </div>
-                
             </div>
         </div>
     )

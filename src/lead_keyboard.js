@@ -3,10 +3,7 @@ import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 
 
 function LeadKeyboard(props) {
-
-
     const [pressed, setPressed] = useState(false)
-
 
     function keyClass(key) {
         if (isHotkeyPressed(key) && pressed) {
@@ -17,7 +14,6 @@ function LeadKeyboard(props) {
         }
     }
 
-
     function pressKey(tone) {
         props.tones.forEach((element, index) => {
             if (index !== tone) {
@@ -26,14 +22,13 @@ function LeadKeyboard(props) {
         });
         setPressed(true)
         props.tones[tone].play()
-        //setLastPlayed(tone)
     }
-
 
     function releaseKey(tone) {
         setPressed(false)
         props.tones[tone].stop()
     }
+
 
     useHotkeys('a', () => pressKey(0), {keydown:true}, [props.tones]);
     useHotkeys('a', () => releaseKey(0), {keyup:true}, [props.tones]);   
@@ -91,4 +86,5 @@ function LeadKeyboard(props) {
         </div>
     )
 }
+
 export default LeadKeyboard

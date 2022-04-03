@@ -6,13 +6,10 @@ import kick from './sounds/kick.mp3';
 import hihat from './sounds/hihat.mp3';
 import crash from './sounds/crash.mp3'
 import useInterval from './use_interval';
-import Button from 'react-bootstrap/Button';
 import DrumMachine from './drum_machine.js'
 
 
 function Beat(props) {
-
-   
     const [isRunning, setIsRunning] = useState(false);
     const [count, setCount] = useState(0)
     const [snareSteps, setSnareSteps] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
@@ -23,6 +20,10 @@ function Beat(props) {
     const [playButtonClass, setPlayButtonClass] = useState('drum-button-off')
     const [stopButtonClass, setStopButtonClass] = useState('drum-button-off')
     const [cleared, setCleared] = useState(false)
+    const [stepClass, setStepClass] = useState([
+        'step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button',
+        'step-button','step-button', 'step-button', 'step-button', 'step-button', 'step-button'])
+
 
     const snare1 = new Pizzicato.Sound(snare)
     const snare2 = new Pizzicato.Sound(snare)
@@ -56,7 +57,6 @@ function Beat(props) {
     const cymbal6 = new Pizzicato.Sound(crash)
     const cymbal7 = new Pizzicato.Sound(crash)
     const cymbal8 = new Pizzicato.Sound(crash)
-
     const snareCymbal = new Pizzicato.Group([snare2, cymbal2])
     const snareKick = new Pizzicato.Group([snare3, kick2])
     const snareHat = new Pizzicato.Group([snare4, hat2])
@@ -68,13 +68,7 @@ function Beat(props) {
     const kickHatCymbal = new Pizzicato.Group([kick7, hat6, cymbal6])
     const hatCymbal = new Pizzicato.Group([hat7, cymbal7])
     const kickHatSnareCymbal = new Pizzicato.Group([kick8, hat8, snare8, cymbal8])
-
-    const [stepClass, setStepClass] = useState([
-        'step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button','step-button',
-        'step-button','step-button', 'step-button', 'step-button', 'step-button', 'step-button'])
-
-
- 
+   
     useEffect(() => {
         var new_bool_array = []
         for (var i = 0; i <16; i++) {
@@ -120,14 +114,12 @@ function Beat(props) {
             sound.addEffect(distortion)
             sound.play();
         }
-
         if (count===15) {
             setCount(0)
         }
         else {
             setCount(count+1)
         }
-
         step_class[count] = 'step-button'
         setStepClass(step_class)
         
@@ -143,13 +135,11 @@ function Beat(props) {
         if (snares[step]) {
             snares[step] = false
             setSnareSteps(snares)
-            // setBoolArray(createBoolArray())
             return      
         }
         else {
             snares[step] = true
             setSnareSteps(snares)
-            //setBoolArray(createBoolArray())
             return
         }
     }
@@ -163,16 +153,13 @@ function Beat(props) {
         if (kicks[step]) {
             kicks[step] = false
             setKickSteps(kicks)
-            //setBoolArray(createBoolArray())
             return
         }
         else {
             kicks[step] = true
             setKickSteps(kicks)
-            //setBoolArray(createBoolArray())
             return
         }
-
     }
 
     function handleHatClick(e) {
@@ -184,13 +171,11 @@ function Beat(props) {
         if (hats[step]) {
             hats[step] = false
             setHatSteps(hats)
-            //setBoolArray(createBoolArray())
             return
         }
         else {
             hats[step] = true
             setHatSteps(hats)
-            //setBoolArray(createBoolArray())
             return
         }
     }
@@ -238,7 +223,6 @@ function Beat(props) {
         setStopButtonClass(current_class)
     }
 
-
     function clear() {
         setSnareSteps([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
         setKickSteps([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
@@ -247,8 +231,6 @@ function Beat(props) {
         setBoolArray([])
         setCleared(true)
     }
-
-    
 
   return (
     <div style={{height:'100%', width:'100%'}}>
@@ -261,28 +243,23 @@ function Beat(props) {
                 <button className={stopButtonClass} onClick={stop}>stop</button>
                 <button className= "drum-button-off" onClick={clear}>clear</button>
             </div>
-
         </div>
-
-
-        
-
        <div style={{height:'86%', paddingTop:'1%'}}>
-       <DrumMachine 
-        snareSteps={snareSteps}
-        handleSnareClick={handleSnareClick}  
-        kickSteps={kickSteps}
-        handleKickClick={handleKickClick}
-        hatSteps={hatSteps}
-        handleHatClick={handleHatClick}
-        cymbalSteps={cymbalSteps}
-        handleCymbalClick={handleCymbalClick}
-        cleared={cleared}
-        stepClass={stepClass}
-        />
+        <DrumMachine 
+            snareSteps={snareSteps}
+            handleSnareClick={handleSnareClick}  
+            kickSteps={kickSteps}
+            handleKickClick={handleKickClick}
+            hatSteps={hatSteps}
+            handleHatClick={handleHatClick}
+            cymbalSteps={cymbalSteps}
+            handleCymbalClick={handleCymbalClick}
+            cleared={cleared}
+            stepClass={stepClass}
+            />
        </div>
        
-      </div>
+    </div>
   );
 }
 

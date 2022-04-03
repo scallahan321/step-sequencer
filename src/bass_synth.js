@@ -1,15 +1,10 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Pizzicato from 'pizzicato';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form'
-
 import BassControls from './bass_controls';
-import { useHotkeys, isHotkeyPressed } from 'react-hotkeys-hook';
 import useInterval from './use_interval';
 
 function BassSynth() {
-
     //roughly 1.059
     const semitone_up = 261.63/246.94
     //roughly .943
@@ -29,9 +24,6 @@ function BassSynth() {
     const [frequencies, setFrequencies] = useState(c_freq)
     const [distortionOn, setdistortionOn] = useState(false)
     const [distButtonClass, setDistButtonClass] = useState("bass-effect-button-off")
-    const [key, setKey] = useState("c")
-  
-
     const multipliers = {
         "c": 1,
         "c_sharp": semitone_up,
@@ -47,8 +39,9 @@ function BassSynth() {
         "a_flat": Math.pow(semitone_down, 4),
     }
 
-  
     useInterval(() => {
+        //this briefly kills sound every 5 seconds to prevent runaway feedback or 
+        // a stuck key causing note to hold
         for (const tone of tones) {
             tone.stop()
         }      
@@ -58,7 +51,6 @@ function BassSynth() {
     gain: 0.4
     });
 
-   
     function toggleDistortion() {
         for (const tone of tones) {
             tone.stop()
@@ -78,7 +70,6 @@ function BassSynth() {
         }
         setdistortionOn(isOn)   
     }
-
 
     function createWaves(scale, distortionBool) {
         var tones = []  
@@ -105,27 +96,12 @@ function BassSynth() {
         return tones
     }
 
-   
     function handleKeyChange(key) {
         for (const tone of tones) {
             tone.stop()
         }
-        setKey(key)
-        setScaleFreq(key)
-        //setKeyFormDisabled(true)
-        //setKeySubmitButtonVariant('info')
-      
+        setScaleFreq(key) 
     }
-
-    // function handleKeySubmit(e) {
-    //     for (const tone of tones) {
-    //         tone.stop()
-    //     }
-    //     setScaleFreq(e)
-    //     setKeyFormDisabled(false)
-    //     setSubmitButtonVariant('outline-secondary')
-    //     //setFormChange(false)
-    // }
 
     function setScaleFreq(key) {
         const frequencies = c_freq.map((element) => element * multipliers[key])
@@ -134,22 +110,16 @@ function BassSynth() {
         setTones(notes)
     }
 
-    
-  
     return (
         <div style={{height:'100%'}}>
-
             <BassControls 
             handleKeyChange={handleKeyChange} 
             toggleDistortion={toggleDistortion}
             distButtonClass={distButtonClass}
             tones={tones}
             />
-             
-            
-           
         </div>
     )
- 
 }
+
 export default BassSynth
