@@ -41,7 +41,7 @@ function App() {
             <p className={muteMessageClass}>Refresh browser to resume</p>
         </Col>  
         <Col lg={8} md={8} sm={12}>
-          <h4 className="page-header">React Step Sequencer and Synth</h4>
+          <h4 className="page-header">React Drum Sequencer and Synth</h4>
           <p style={{color:'white', textAlign:'right'}}>Made by Sean Callahan</p>
         </Col>
       </Row>
