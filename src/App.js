@@ -34,7 +34,7 @@ function App() {
   }
 
   return (
-    <Container fluid className='vh-100 container-main' style={{border: '3px solid blue', backgroundColor:'black'}}>
+    <Container fluid className='vh-100 container-main' style={{backgroundColor:'black'}}>
       <Row style={{height:'10%', paddingTop:'0.5rem'}}>
         <Col style={{height:'100%', width:'100%'}} lg={4} md={4} sm={12}>
             <button className={muteButtonClass} onClick={killSound}>{muteButtonText}</button>

@@ -103,6 +103,10 @@ function Beat(props) {
     });
 
     useInterval(() => {
+        if (count === 0){
+            Pizzicato.volume = 0
+            Pizzicato.volume = 0.5
+        }
         var step_class = [...stepClass]
         if (count % 2 ===0) {
             step_class[count] = 'step-button-highlighted'
@@ -116,6 +120,7 @@ function Beat(props) {
         }
         if (count===15) {
             setCount(0)
+            
         }
         else {
             setCount(count+1)
@@ -256,6 +261,7 @@ function Beat(props) {
             handleCymbalClick={handleCymbalClick}
             cleared={cleared}
             stepClass={stepClass}
+            isRunning={isRunning}
             />
        </div>
        

@@ -87,7 +87,7 @@ function DrumMachine(props) {
         if (instrument==="snare") {
             return (
                    <div key={snareKeys[i]} className="step-switch">
-                        <button className={props.stepClass[i]}  value={i} onClick={e => handleClick(e, "snare")}></button>
+                        <button className={props.stepClass[i]} disabled={props.isRunning}  value={i} onClick={e => handleClick(e, "snare")}></button>
                         <span className={snareSelected[i]}></span>  
                     </div>  
             )     
@@ -95,7 +95,7 @@ function DrumMachine(props) {
         else if (instrument==="kick") {
             return (
                 <div key={kickKeys[i]} className="step-switch">
-                    <button className={props.stepClass[i]} value={i} onClick={e => handleClick(e, "kick")}></button>
+                    <button className={props.stepClass[i]} disabled={props.isRunning} value={i} onClick={e => handleClick(e, "kick")}></button>
                     <span className={kickSelected[i]}></span>
                 </div>  
             )    
@@ -103,7 +103,7 @@ function DrumMachine(props) {
         else if (instrument==="hat") {
             return (
                 <div key={hatKeys[i]} className="step-switch">
-                    <button className={props.stepClass[i]} value={i} onClick={e => handleClick(e, "hat")}></button>
+                    <button className={props.stepClass[i]} disabled={props.isRunning} value={i} onClick={e => handleClick(e, "hat")}></button>
                     <span className={hatSelected[i]}></span>
                 </div>  
             )    
@@ -111,7 +111,7 @@ function DrumMachine(props) {
         else {
             return (
                 <div key={cymbalKeys[i]} className="step-switch">
-                    <button className={props.stepClass[i]} value={i} onClick={e => handleClick(e, "cymbal")}></button>
+                    <button className={props.stepClass[i]} disabled={props.isRunning} value={i} onClick={e => handleClick(e, "cymbal")}></button>
                     <span className={cymbalSelected[i]}></span>
                 </div>  
             )    
